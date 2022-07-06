@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import HomeContainer from './containers/HomeContainer.jsx'
+import MiniDrawer from './containers/MiniDrawer.jsx';
+import { Container } from '@mui/material';
+import DetailsContainer from './containers/DetailsContaier.jsx';
+import NotisContainer from './containers/NotisContainer.jsx';
+import QueryContainer from './containers/QueryContainer.jsx';
 
 function App(){
 
-  const [data, setData] = React.useState('');
-
-  function handleClick() {
-    fetch('http://localhost:8080/api/')
-      .then(response => response.json())
-      .then(data =>  {
-        setData(data)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
+  
   return(
     <>
-    <div>
-      <h1>Front End Neptune World</h1>
-      <button onClick={handleClick}>SEND</button>
-      {data && <h1>{data}</h1>}
-    </div>
+    <BrowserRouter> 
+      <MiniDrawer>   
+        <Container maxWidth='xl'>
+          <Routes>
+            <Route path='/' element={<HomeContainer />} />
+            <Route path='/details' element={<DetailsContainer />} />
+            <Route path='/notis' element={<NotisContainer />} />
+            <Route path='/query' element={<QueryContainer />} />
+          </Routes>
+        </Container>
+      </MiniDrawer>
+    </BrowserRouter>
     </>
   )
 }
