@@ -84,6 +84,7 @@ const config = {
   },
   watchFiles: ['client'],
 },
+
 };
 
 module.exports = config;
