@@ -1,7 +1,11 @@
+// kubectl port-forward -n default svc/prometheus-kube-prometheus-prometheus 9090
+
+
 const exp = require('constants');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const k8sRouter = require('./routes/routes');
 
 const PORT = 3000;
 const app = express();
@@ -11,13 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.resolve(__dirname, '../build')));
 
-// app.get('/home', (req, res) => {
-//   return res
-//     .status(200)
-// 	.setHeader('Content-Type', 'text/html')
-//     .sendFile(path.join(__dirname, '../index.html'));
-// });
-
+app.use('/api/k8s', k8sRouter);
 
 
 app.get('/api', (req, res) => {
@@ -58,3 +56,5 @@ function defaultErrorHandler(err, req, res, next) {
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 });
+
+module.exports = app
