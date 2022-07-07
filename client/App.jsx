@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomeContainer from './containers/HomeContainer.jsx'
-import MiniDrawer from './containers/MiniDrawer.jsx';
+import HomeContainer from './containers/HomeContainer'
+import MiniDrawer from './containers/MiniDrawer';
 import { Container } from '@mui/material';
-import DetailsContainer from './containers/DetailsContaier.jsx';
-import NotisContainer from './containers/NotisContainer.jsx';
-import QueryContainer from './containers/QueryContainer.jsx';
+import DetailsContainer from './containers/DetailsContaier';
+import NotisContainer from './containers/NotisContainer';
+import QueryContainer from './containers/QueryContainer';
+
+
 
 function App(){
 
