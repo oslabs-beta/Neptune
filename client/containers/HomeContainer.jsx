@@ -4,11 +4,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-// Below for our cards
 import BasicCard from '../components/BasicCard'
-
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import DoughnutChart from '../components/DoughnutChart';
+import PieChart from '../components/PieChart';
+import Grid from '@mui/material/Grid';
 
 export default function HomeContainer (){
    // For our drop down
@@ -19,10 +20,10 @@ export default function HomeContainer (){
    };
 
    //dummy data for now
-   const allNodesInfo = [{name: "Node1", ip: "192.168.56.23", os: "Linux", pods: "2", color: "red"},
-                        {name: "Node2", ip: "192.168.12.12", os: "Linux", pods: "2", color: "green"},
-                        {name: "Node3", ip: "255.1.1.9", os: "Linux", pods: "1", color: "blue" },
-                        {name: "Node4", ip: "27.5.5.0", os: "Linux", pods: "1", color: "yellow"}];
+   const allNodesInfo = [{name: "Node1", ip: "192.168.56.23", os: "Linux", pods: "2", color: 'rgba(255, 99, 132, 1)'},
+                        {name: "Node2", ip: "192.168.12.12", os: "Linux", pods: "2", color: 'rgba(75, 192, 192, 1)'},
+                        {name: "Node3", ip: "255.1.1.9", os: "Linux", pods: "1", color: 'rgba(54, 162, 235, 1)' },
+                        {name: "Node4", ip: "27.5.5.0", os: "Linux", pods: "1", color: 'rgba(255, 206, 86, 1)'}];
 
    
 
@@ -66,8 +67,15 @@ export default function HomeContainer (){
             ))
          }
       </List>
-
-      <h1> This is home container</h1>
+      <Grid container spacing={2}>
+         <Grid item xs={6}>
+            <DoughnutChart />
+         </Grid>
+         <Grid item xs={6}>
+            <PieChart />
+         </Grid>
+      </Grid>
+      {/* <DoughnutChart /> */}
    </>
    );
 }
