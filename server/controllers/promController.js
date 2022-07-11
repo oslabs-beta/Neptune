@@ -32,4 +32,61 @@ promController.isUp = (req, res, next) => {
     });
 };
 
+//CLUSTER - Total CPU Cores
+
+promController.promClusterCpuCore = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=count without(cpu, mode) (node_cpu_seconds_total{mode="idle"})`
+    );
+    res.locals.promClusterCpuCore = await response.json();
+    res.locals.promClusterCpuCore = parseInt(
+      res.locals.promClusterCpuCore.data.result[0].value[1]
+    );
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// CLUSTER - Memory usage
+
+promController.promClusterMemory = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=(1-sum(kube_node_status_allocatable{resource="memory", unit="byte"})/sum(kube_node_status_capacity{resource="memory", unit="byte"}))*100`
+    );
+    res.locals.promClusterMemory = await response.json();
+    res.locals.promClusterMemory =
+      res.locals.promClusterMemory.data.result[0].value[1];
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// NODE - CPU usage
+promController.promNodeCpu = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=(1 - sum by (instance)(increase(node_cpu_seconds_total{mode="idle"}[5m])) / sum by (instance)(increase(node_cpu_seconds_total[5m])))*100)`
+    );
+    res.locals.promNodeCpu = await response.json();
+    res.locals.promNodeCpu = res.locals.promNodeCpu.data;
+    console.log(res.locals.promNodeCpu);
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// NODE - Memory usage
+// NODE - Return all pods from a node
+// NODE - Return pod capacity of node as a number
+// NODE - Return network utilization
+// NODE - Return network errors
+
+// POD - Return pod info as an array of objects
+// {name, node, namespace}
+
 module.exports = promController;

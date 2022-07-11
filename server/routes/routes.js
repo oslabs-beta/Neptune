@@ -2,13 +2,6 @@ const express = require('express');
 const k8sRouter = express.Router();
 const k8sController = require('../controllers/k8sClient');
 const promController = require('../controllers/promController');
-//const promRouter = express.Router();
-
-// /api/k8s/"NEW END POINT HERE"
-// Prometheus route handler
-k8sRouter.get('/promUp', promController.isUp, (req, res) => {
-  return res.status(200).json(res.locals.query);
-});
 
 // ROUTE FOR PODS
 k8sRouter.get('/pod', k8sController.getAllPods, (req, res) => {
@@ -37,6 +30,44 @@ k8sRouter.get('/deployment', k8sController.getDeployment, (req, res) => {
 // ROUTE FOR SERVICES
 k8sRouter.get('/services', k8sController.getService, (req, res) => {
   return res.status(200).json(res.locals.service);
+});
+
+/**
+ * ************************************
+ *
+ * @module  promql-requests
+ * @description contains our routes for our promethus fetch requests
+ *
+ * ************************************
+ */
+// Prometheus route handlers
+
+// Prometheus status
+k8sRouter.get('/promStatus', promController.isUp, (req, res) => {
+  return res.status(200).json(res.locals.query);
+});
+
+// Prometheus cluster CPU usage
+k8sRouter.get(
+  '/promClusterCpuCore',
+  promController.promClusterCpuCore,
+  (req, res) => {
+    return res.status(200).json(res.locals.promClusterCpuCore);
+  }
+);
+
+// Prometheus cluster Memory usage
+k8sRouter.get(
+  '/promClusterMemory',
+  promController.promClusterMemory,
+  (req, res) => {
+    return res.status(200).json(res.locals.promClusterMemory);
+  }
+);
+
+// Prometheus node CPU usage
+k8sRouter.get('/promNodeCpu', promController.promNodeCpu, (req, res) => {
+  return res.status(200).json(res.locals.promNodeCpu);
 });
 
 module.exports = k8sRouter;
