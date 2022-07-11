@@ -1,10 +1,11 @@
 // kubectl port-forward -n default svc/prometheus-kube-prometheus-prometheus 9090
 
-const exp = require('constants');
+// const exp = require('constants');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const k8sRouter = require('./routes/routes');
+const promRouter = require('./routes/routes');
 
 const PORT = 3000;
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.use('/api/k8s', k8sRouter);
+app.use('/api/prom', promRouter);
 
 app.get('/api', (req, res) => {
   return res.status(200).json('HELLO from Neptune BackEnd');
@@ -35,7 +37,7 @@ app.use(defaultErrorHandler);
 function defaultErrorHandler(err, req, res, next) {
   const defaultErr = {
     log: 'Global error handler',
-    status: 400,
+    status: 500,
     message: {
       err: 'An error occurred, and this is the global error handler',
     },
