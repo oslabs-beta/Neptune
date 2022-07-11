@@ -21,7 +21,7 @@ export default function DetailsContainer() {
     fetch('http://localhost:8080/api/k8s/pod')
       .then((response) => response.json())
       .then((data) => {
-        setPodNumber(data);
+        setPodNumber(data.length);
         console.log('POD COUNT: ', data);
       });
 
@@ -29,7 +29,7 @@ export default function DetailsContainer() {
     fetch('http://localhost:8080/api/k8s/node')
       .then((response) => response.json())
       .then((data) => {
-        setNodeNumber(data);
+        setNodeNumber(data.length);
         console.log('NODE COUNT: ', data);
       });
 
@@ -37,7 +37,7 @@ export default function DetailsContainer() {
     fetch('http://localhost:8080/api/k8s/deployment')
       .then((response) => response.json())
       .then((data) => {
-        setDeplNumber(data);
+        setDeplNumber(data.length);
         console.log('DEPL COUNT: ', data);
       });
 
@@ -45,15 +45,15 @@ export default function DetailsContainer() {
     fetch('http://localhost:8080/api/k8s/services')
       .then((response) => response.json())
       .then((data) => {
-        setServiceNumber(data);
+        setServiceNumber(data.length);
         console.log('SERVICES COUNT: ', data);
       });
 
     // fetch req for namespaces
-    fetch('http://localhost:8080/api/k8s/namespace')
+    fetch('http://localhost:8080/api/k8s/promNamespaces')
       .then((response) => response.json())
       .then((data) => {
-        setNamespaceNumber(data);
+        setNamespaceNumber(data.length);
         console.log('NAMESPACEX COUNT', data);
       });
   }, []);

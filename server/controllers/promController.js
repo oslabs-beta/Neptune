@@ -7,6 +7,24 @@ const queryURL = 'http://127.0.0.1:9090/api/v1/';
 
 const promController = {};
 
+// GETTING ALL THE NAMESPACES IN AN ARRAY
+promController.promNamespaces = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=kube_namespace_created`
+    );
+    data = await response.json();
+    const namespaces = [];
+    data.data.result.forEach((element) => {
+      namespaces.push(element.metric.namespace);
+    });
+    res.locals.promNamespaces = namespaces;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
 // promController.isUp = async (req, res, next) => {
 //   const queryStr = `${queryURL}alerts`;
 //   try {
