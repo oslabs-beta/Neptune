@@ -5,7 +5,7 @@ const promController = require('../controllers/promController');
 
 // ROUTE FOR PODS
 k8sRouter.get('/pod', k8sController.getAllPods, (req, res) => {
-  return res.status(200).json(res.locals.podList.body.items.length);
+  return res.status(200).json(res.locals.podList);
 });
 
 // ROUTE FOR NODE LIST AND NODE STATUS
@@ -19,7 +19,7 @@ k8sRouter.get('/nodeStatus', k8sController.getAllNodes, (req, res) => {
 
 // ROUTE FOR NAMESPACES
 k8sRouter.get('/namespace', k8sController.getAllNamespaces, (req, res) => {
-  return res.status(200).json(res.locals.namespace.body.items.length);
+  return res.status(200).json(res.locals.namespace);
 });
 
 // ROUTE FOR DEPLOYMENTS
@@ -41,6 +41,11 @@ k8sRouter.get('/services', k8sController.getService, (req, res) => {
  * ************************************
  */
 // Prometheus route handlers
+
+// TESTING NAMESPACES ******************** JIN
+k8sRouter.get('/promNamespaces', promController.promNamespaces, (req, res) => {
+  return res.status(200).json(res.locals.promNamespaces);
+});
 
 // Prometheus status
 k8sRouter.get('/promStatus', promController.isUp, (req, res) => {
