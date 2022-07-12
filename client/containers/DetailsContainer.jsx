@@ -6,6 +6,11 @@ import Pods from '../components/Pods';
 import Depl from '../components/Depl';
 import Service from '../components/Service';
 import Namespace from '../components/Namespace';
+import LineChart from '../components/LineChart';
+import Grid from '@mui/material/Grid';
+import VerticalLineChart from '../components/VerticalLineChart';
+import PolarAreaChart from '../components/PolarAreaChart';
+import AreaChart from '../components/AreaChart';
 
 export default function DetailsContainer() {
   //fetch request originally in  Pods.jsx
@@ -70,6 +75,23 @@ export default function DetailsContainer() {
         </ListItem>
       </List>
 
+      <h1> This is cluster section</h1>
+      
+      <h2>below is node section</h2>
+
+      <Grid container spacing={4}>
+        <Grid item xs={6} > <LineChart/> </Grid>
+        <Grid item xs={6} > <VerticalLineChart/> </Grid>
+      </Grid>
+      <br />
+      <br />
+      <br />
+      <br />
+      <Grid container spacing={4}>
+        <Grid item xs={6} > <PolarAreaChart/> </Grid>
+        <Grid item xs={6} > <AreaChart/> </Grid>
+      </Grid>
+      
       <h1> This is details container</h1>
     </>
   );
