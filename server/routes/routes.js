@@ -3,29 +3,116 @@ const k8sRouter = express.Router();
 const k8sController = require('../controllers/k8sClient');
 const promController = require('../controllers/promController');
 
-// ROUTE FOR PODS
+/////////////////////////////////////////////////////////////////////////////-------------------------------PODS-----------------------------////////////
+/////////////////////////////////////////////////////////////////////////////
+
+// ROUTE FOR PODS, PODNAMES, PODIPS
 k8sRouter.get('/pod', k8sController.getAllPods, (req, res) => {
   return res.status(200).json(res.locals.podList);
 });
+k8sRouter.get('/podNames', k8sController.getAllPods, (req, res) => {
+  return res.status(200).json(res.locals.podNames);
+});
+k8sRouter.get('/podIps', k8sController.getAllPods, (req, res) => {
+  return res.status(200).json(res.locals.podIps);
+});
+
+/////////////////////////////////////////////////////////////////////////////-------------------------------NODES-----------------------------////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // ROUTE FOR NODE LIST AND NODE STATUS
+// returns node count
 k8sRouter.get('/node', k8sController.getAllNodes, (req, res) => {
   return res.status(200).json(res.locals.nodeList);
 });
 
-k8sRouter.get('/nodeStatus', k8sController.getAllNodes, (req, res) => {
-  return res.status(200).json(res.locals.nodeList.nodeStatus);
+// returns node status
+// k8sRouter.get('/nodeStatus', k8sController.getAllNodes, (req, res) => {
+//   return res.status(200).json(res.locals.nodeList.nodeStatus);
+// });
+
+// returns node cpu usage
+k8sRouter.get('/promNodeCpu', promController.promNodeCpu, (req, res) => {
+  return res.status(200).json(res.locals.promNodeCpu);
 });
 
-// ROUTE FOR NAMESPACES
+// returns node memory usage
+k8sRouter.get('/promNodeMemory', promController.promNodeMemory, (req, res) => {
+  return res.status(200).json(res.locals.promNodeMemory);
+});
+
+// returns all pods from a node
+k8sRouter.get('/promNodePods', promController.promNodePods, (req, res) => {
+  return res.status(200).json(res.locals.promNodePods);
+});
+
+// returns pod capcity of node as a number
+// k8sRouter.get(
+//   {
+//     /*INSERT HERE*/
+//   },
+//   {
+//     /*INSERT HERE*/
+//   },
+//   (req, res) => {
+//     return res.status(200).json({
+//       /*INSERT HERE*/
+//     });
+//   }
+// );
+
+// return network utilization
+// k8sRouter.get(
+//   {
+//     /*INSERT HERE*/
+//   },
+//   {
+//     /*INSERT HERE*/
+//   },
+//   (req, res) => {
+//     return res.status(200).json({
+//       /*INSERT HERE*/
+//     });
+//   }
+// );
+
+// return network errors
+// k8sRouter.get(
+//   {
+//     /*INSERT HERE*/
+//   },
+//   {
+//     /*INSERT HERE*/
+//   },
+//   (req, res) => {
+//     return res.status(200).json({
+//       /*INSERT HERE*/
+//     });
+//   }
+// );
+
+/////////////////////////////////////////////////////////////////////////////----------------------------NAMESPACES--------------------------////////////
+/////////////////////////////////////////////////////////////////////////////
+
+// ROUTE FOR NUMBER OF NAMESPACES
 k8sRouter.get('/namespace', k8sController.getAllNamespaces, (req, res) => {
   return res.status(200).json(res.locals.namespace);
 });
+// ROUTE FOR NAMESPACES NAMES
+k8sRouter.get('/namespaceNames', k8sController.getAllNamespaces, (req, res) => {
+  return res.status(200).json(res.locals.namespaceNames);
+});
+
+/////////////////////////////////////////////////////////////////////////////----------------------------DEPLOYMENTS--------------------------////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // ROUTE FOR DEPLOYMENTS
 k8sRouter.get('/deployment', k8sController.getDeployment, (req, res) => {
   return res.status(200).json(res.locals.deployment);
 });
+
+/////////////////////////////////////////////////////////////////////////////----------------------------SERVICES--------------------------////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // ROUTE FOR SERVICES
 k8sRouter.get('/services', k8sController.getService, (req, res) => {
