@@ -55,7 +55,7 @@ export default function DetailsContainer() {
       });
 
     // fetch req for namespaces
-    fetch('http://localhost:8080/api/k8s/promNamespaces')
+    fetch('http://localhost:8080/api/k8s/namespace')
       .then((response) => response.json())
       .then((data) => {
         setNamespaceNumber(data.length);
@@ -76,22 +76,34 @@ export default function DetailsContainer() {
       </List>
 
       <h1> This is cluster section</h1>
-      
+
       <h2>below is node section</h2>
 
       <Grid container spacing={4}>
-        <Grid item xs={6} > <LineChart/> </Grid>
-        <Grid item xs={6} > <VerticalLineChart/> </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <LineChart />{' '}
+        </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <VerticalLineChart />{' '}
+        </Grid>
       </Grid>
       <br />
       <br />
       <br />
       <br />
       <Grid container spacing={4}>
-        <Grid item xs={6} > <PolarAreaChart/> </Grid>
-        <Grid item xs={6} > <AreaChart/> </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <PolarAreaChart />{' '}
+        </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <AreaChart />{' '}
+        </Grid>
       </Grid>
-      
+
       <h1> This is details container</h1>
     </>
   );
