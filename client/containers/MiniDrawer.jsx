@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Link } from 'react-router-dom';
+import neptune2 from "../images/neptune2.png"
 
 const drawerWidth = 240;
 
@@ -119,9 +120,10 @@ export default function MiniDrawer({ children }) {
           <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
             <Typography variant="h6" noWrap component="div" sx={{ display: 'flex', alignItems:'center' }}>
               <Box mr={1}>
-                  <span className='material-icons'>dinner_dining</span>{' '}
+                  
+                  <img src = {neptune2} width="70"/>
               </Box>
-              Neptune
+              neptune
             </Typography>
           </Link>
         </Toolbar>
