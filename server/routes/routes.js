@@ -35,7 +35,7 @@ k8sRouter.get('/node', k8sController.getAllNodes, (req, res) => {
 k8sRouter.get('/promNodeCpu', promController.promNodeCpu, (req, res) => {
   return res.status(200).json(res.locals.promNodeCpu);
 });
-
+/*
 // returns node memory usage
 k8sRouter.get('/promNodeMemory', promController.promNodeMemory, (req, res) => {
   return res.status(200).json(res.locals.promNodeMemory);
@@ -45,7 +45,7 @@ k8sRouter.get('/promNodeMemory', promController.promNodeMemory, (req, res) => {
 k8sRouter.get('/promNodePods', promController.promNodePods, (req, res) => {
   return res.status(200).json(res.locals.promNodePods);
 });
-
+*/
 // returns pod capcity of node as a number
 // k8sRouter.get(
 //   {
