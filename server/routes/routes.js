@@ -35,46 +35,38 @@ k8sRouter.get('/node', k8sController.getAllNodes, (req, res) => {
 k8sRouter.get('/promNodeCpu', promController.promNodeCpu, (req, res) => {
   return res.status(200).json(res.locals.promNodeCpu);
 });
-/*
+
 // returns node memory usage
 k8sRouter.get('/promNodeMemory', promController.promNodeMemory, (req, res) => {
   return res.status(200).json(res.locals.promNodeMemory);
 });
 
+// returns all pods from a node - SKIP?!?!?
+
+// return pod capacity of node as a number
+k8sRouter.get('/promNodePodCap', promController.promNodePodCap, (req, res) => {
+  return res.status(200).json(res.locals.promNodePodCap);
+});
+
+// returns node network utilization
+k8sRouter.get('/promNodeNetUtil', promController.promNodeNetUtil, (req, res) => {
+  return res.status(200).json(res.locals.promNodeNetUtil);
+});
+
+// returns node network errors
+k8sRouter.get('/promNodeNetErr', promController.promNodeNetErr, (req, res) => {
+  return res.status(200).json(res.locals.promNodeNetErr);
+});
+
+/*
 // returns all pods from a node
 k8sRouter.get('/promNodePods', promController.promNodePods, (req, res) => {
   return res.status(200).json(res.locals.promNodePods);
 });
 */
-// returns pod capcity of node as a number
-// k8sRouter.get(
-//   {
-//     /*INSERT HERE*/
-//   },
-//   {
-//     /*INSERT HERE*/
-//   },
-//   (req, res) => {
-//     return res.status(200).json({
-//       /*INSERT HERE*/
-//     });
-//   }
-// );
 
-// return network utilization
-// k8sRouter.get(
-//   {
-//     /*INSERT HERE*/
-//   },
-//   {
-//     /*INSERT HERE*/
-//   },
-//   (req, res) => {
-//     return res.status(200).json({
-//       /*INSERT HERE*/
-//     });
-//   }
-// );
+
+
 
 // return network errors
 // k8sRouter.get(

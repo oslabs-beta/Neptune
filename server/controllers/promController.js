@@ -1,5 +1,7 @@
 // kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 --namespace=default 9090:9090
 
+const { response } = require('express');
+
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
@@ -99,12 +101,75 @@ promController.promNodeCpu = async (req, res, next) => {
 };
 
 // NODE - Memory usage
-// NODE - Return all pods from a node
-// NODE - Return pod capacity of node as a number
-// NODE - Return network utilization
-// NODE - Return network errors
+promController.promNodeMemory = async (req, res, next) => {
+  try{
+    const response = await fetch(
+      `${queryURL}query?query=(1-sum(kube_node_status_allocatable{resource="memory",unit="byte",node="minikube"})/sum(kube_node_status_capacity{resource="memory",unit="byte",node="minikube"}))*100`
+    );
+    res.locals.promNodeMemory = await response.json();
+    res.locals.promNodeMemory = parseInt(res.locals.promNodeMemory.data.result[0].value[1]);
+    console.log(res.locals.promNodeMemory);
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
 
-// POD - Return pod info as an array of objects
-// {name, node, namespace}
+// NODE - Return all pods from a node
+
+// NODE - Return pod capacity of node as a number
+promController.promNodePodCap= async (req, res, next) => {
+  try{
+    const response = await fetch(
+      `${queryURL}query?query=kube_node_status_capacity{resource="pods"}`
+    );
+    res.locals.promNodePodCap = await response.json();
+    res.locals.promNodePodCap = parseInt(res.locals.promNodePodCap.data.result[0].value[1]);
+    console.log(res.locals.promNodePodCap);
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
+
+
+// NODE - Return network utilization
+promController.promNodeNetUtil = async (req, res, next) => {
+  try{
+    const response = await fetch(
+      `${queryURL}query?query=kube_node_status_capacity{resource="pods"}`
+    );
+    console.log('HI!')
+    res.locals.promNodeNetUtil = await response.json();
+    res.locals.promNodeNetUtil = parseInt(res.locals.promNodeNetUtil.data.result[0].value[1]);
+    console.log('YO', res.locals.promNodeNetUtil);
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
+// NODE - Return network errors
+promController.promNodeNetErr = async (req, res, next) => {
+  try{
+    const response1 = await fetch(
+      `${queryURL}query?query=sum(node_network_receive_errs_total)`
+    );
+    const receiveErr = await response1.json();
+    
+    const response2 = await fetch(
+      `${queryURL}query?query=sum(node_network_transmit_errs_total)`
+    );
+    const transmitErr = await response2.json();
+
+    const networkErrors = Math.floor((parseInt(receiveErr.data.result[0].value[1]) + parseInt(transmitErr.data.result[0].value[1]))/1024);
+    
+    res.locals.promNodeNetErr = networkErrors;
+
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
+
 
 module.exports = promController;
