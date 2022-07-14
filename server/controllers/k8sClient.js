@@ -21,7 +21,6 @@ k8sController = {};
 //   console.log(res.body);
 // });
 
-
 // Getting pod count and pod names
 k8sController.getAllPods = async (req, res, next) => {
   try {
@@ -47,7 +46,6 @@ k8sController.getAllPods = async (req, res, next) => {
     });
   }
 };
-
 
 // Getting list of nodes and list of component statuses
 k8sController.getAllNodes = async (req, res, next) => {
@@ -90,7 +88,6 @@ k8sController.getAllNamespaces = async (req, res, next) => {
     });
   }
 };
-
 
 // Getting all deployments in cluster
 k8sController.getDeployment = async (req, res, next) => {

@@ -27,7 +27,7 @@ export default function DetailsContainer() {
       .then((response) => response.json())
       .then((data) => {
         setPodNumber(data.length);
-        console.log('POD COUNT: ', data);
+        console.log('POD COUNT: ', data.length);
       });
 
     // return node count
@@ -35,7 +35,7 @@ export default function DetailsContainer() {
       .then((response) => response.json())
       .then((data) => {
         setNodeNumber(data.length);
-        console.log('NODE COUNT: ', data);
+        console.log('NODE COUNT: ', data.length);
       });
 
     // return deployment count
@@ -43,7 +43,7 @@ export default function DetailsContainer() {
       .then((response) => response.json())
       .then((data) => {
         setDeplNumber(data.length);
-        console.log('DEPL COUNT: ', data);
+        console.log('DEPL COUNT: ', data.length);
       });
 
     // return services count
@@ -51,7 +51,7 @@ export default function DetailsContainer() {
       .then((response) => response.json())
       .then((data) => {
         setServiceNumber(data.length);
-        console.log('SERVICES COUNT: ', data);
+        console.log('SERVICES COUNT: ', data.length);
       });
 
     // fetch req for namespaces
@@ -59,7 +59,7 @@ export default function DetailsContainer() {
       .then((response) => response.json())
       .then((data) => {
         setNamespaceNumber(data.length);
-        console.log('NAMESPACEX COUNT', data);
+        console.log('NAMESPACEX COUNT', data.length);
       });
   }, []);
 
