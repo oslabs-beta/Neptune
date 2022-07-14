@@ -10,9 +10,21 @@ import QueryContainer from './containers/QueryContainer';
 function App() {
   return (
     <>
-      <BrowserRouter>
+
+    <BrowserRouter >
         <MiniDrawer>
-          <Container maxWidth='xl'>
+          <Container
+          sx= {{
+            background:"whitesmoke",
+            width: 2/2,
+            height: "1200px",
+            borderRadius: "16px",
+            marginTop: "-10px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            
+        }}>
             <Routes>
               <Route path='/' element={<HomeContainer />} />
               <Route path='/details' element={<DetailsContainer />} />
@@ -21,7 +33,7 @@ function App() {
             </Routes>
           </Container>
         </MiniDrawer>
-      </BrowserRouter>
+    </BrowserRouter>
     </>
   );
 }

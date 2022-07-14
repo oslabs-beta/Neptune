@@ -14,12 +14,19 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
-const drawerWidth = 240;
+const drawerWidth = 300
+
+
+
+
 
 export default function PermanentDrawerLeft() {
+
   return (
+    
+    
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+      <CssBaseline/>
       <AppBar
         position="fixed"
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
@@ -37,6 +44,7 @@ export default function PermanentDrawerLeft() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+          
           },
         }}
         variant="permanent"
