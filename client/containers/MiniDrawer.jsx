@@ -20,6 +20,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Link } from 'react-router-dom';
 import neptune2 from "../images/neptune2.png"
+import { Container } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -101,10 +102,10 @@ export default function MiniDrawer({ children }) {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex'  }} >
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar sx={{backgroundColor: '#14496c'}} >
+        <Toolbar sx={{backgroundColor: '#003DA0'}} >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -123,19 +124,21 @@ export default function MiniDrawer({ children }) {
                   
                   <img src = {neptune2} width="70"/>
               </Box>
-              neptune
+            
             </Typography>
           </Link>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      
+      <Drawer variant="permanent" open={open}  >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+      <div > 
+        <List > 
           {[
             { text: 'Home', path: '/', icon: 'house' },
             { text: 'Details', path: '/details', icon: 'speed' },
@@ -168,6 +171,7 @@ export default function MiniDrawer({ children }) {
             </Link>
           ))}
         </List>
+      </div>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
