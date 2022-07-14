@@ -1,5 +1,3 @@
-// kubectl port-forward -n default svc/prometheus-kube-prometheus-prometheus 9090
-
 // const exp = require('constants');
 const express = require('express');
 const path = require('path');

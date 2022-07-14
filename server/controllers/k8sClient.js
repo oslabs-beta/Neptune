@@ -21,12 +21,21 @@ k8sController = {};
 //   console.log(res.body);
 // });
 
-// Getting all pods
+
+// Getting pod count and pod names
 k8sController.getAllPods = async (req, res, next) => {
   try {
     const podsResult = await k8sApiSvc.listPodForAllNamespaces();
-    res.locals.podList = podsResult.body.items;
-    //console.log('POD COUNT:', res.locals.podList.body.items.length);
+    res.locals.podCount = podsResult.body.items;
+
+    const podNames = [];
+    const podIps = [];
+    podsResult.body.items.forEach((element) => {
+      podNames.push(element.metadata.generateName);
+      podIps.push(element.status.podIP);
+    });
+    res.locals.podNames = podNames;
+    res.locals.podIps = podIps;
     return next();
   } catch (err) {
     return next({
@@ -38,6 +47,7 @@ k8sController.getAllPods = async (req, res, next) => {
     });
   }
 };
+
 
 // Getting list of nodes and list of component statuses
 k8sController.getAllNodes = async (req, res, next) => {
@@ -59,14 +69,16 @@ k8sController.getAllNodes = async (req, res, next) => {
   }
 };
 
-// Getting all namespaces
+// Getting number of namespaces and their names
 k8sController.getAllNamespaces = async (req, res, next) => {
   try {
     const namespaceResult = await k8sApiSvc.listNamespace();
-    res.locals.namespace = namespaceResult;
-    // const namespaceList = res.locals.namespace.map(name => {
-
-    // })
+    res.locals.namespace = namespaceResult.response.body.items;
+    const namespaceNames = [];
+    namespaceResult.response.body.items.forEach((element) => {
+      namespaceNames.push(element.metadata.name);
+    });
+    res.locals.namespaceNames = namespaceNames;
     return next();
   } catch (err) {
     return next({
@@ -78,6 +90,7 @@ k8sController.getAllNamespaces = async (req, res, next) => {
     });
   }
 };
+
 
 // Getting all deployments in cluster
 k8sController.getDeployment = async (req, res, next) => {

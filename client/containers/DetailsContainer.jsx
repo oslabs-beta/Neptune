@@ -23,7 +23,7 @@ export default function DetailsContainer() {
   // useEffect counts the state
   useEffect(() => {
     // return pod count
-    fetch('http://localhost:8080/api/k8s/pod')
+    fetch('http://localhost:8080/api/k8s/podCount')
       .then((response) => response.json())
       .then((data) => {
         setPodNumber(data.length);

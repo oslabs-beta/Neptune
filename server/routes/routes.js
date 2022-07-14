@@ -7,8 +7,8 @@ const promController = require('../controllers/promController');
 /////////////////////////////////////////////////////////////////////////////
 
 // ROUTE FOR PODS, PODNAMES, PODIPS
-k8sRouter.get('/pod', k8sController.getAllPods, (req, res) => {
-  return res.status(200).json(res.locals.podList);
+k8sRouter.get('/podCount', k8sController.getAllPods, (req, res) => {
+  return res.status(200).json(res.locals.podCount);
 });
 k8sRouter.get('/podNames', k8sController.getAllPods, (req, res) => {
   return res.status(200).json(res.locals.podNames);
