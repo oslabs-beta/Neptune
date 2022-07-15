@@ -11,7 +11,7 @@ import DoughnutChart from '../components/DoughnutChart';
 import PieChart from '../components/PieChart';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
-import ReactSpeedometer from "react-d3-speedometer"
+import GaugeChartTemplate from '../components/GaugeChartTemplate'
 
 export default function HomeContainer() {
   // For our drop down
@@ -44,7 +44,7 @@ export default function HomeContainer() {
         const g = Math.floor(Math.random() * 255);
         const b = Math.floor(Math.random() * 255);
         node.color = `rgba(${r},${g},${b},1)`;
-        node.key = i;
+        node.key = {i};
 
         // nodesInfo.push(node);
         setNodesInfo((prev) => ([...prev,node]));
@@ -55,28 +55,20 @@ export default function HomeContainer() {
       ////////////////////////////////////////////
       //---- FETCH REQ FOR THE 1ST SPEEDOMETER ---- CPU USAGE OF THE CLUSTER 
       ////// //////////////////////////////////
-      // fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
-      // .then((response) => response.json())
-      // .then((data) => {
-      //   setPodNumber(data.length);
-      //   console.log('CPU USAGE CLUSTER: ', data.length);
-      // });
+      fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
+      .then((response) => response.json())
+      .then((data) => {
+        setCpu(data);
+      });
 
     ////////////////////////////////////////////
       //---- FETCH REQ FOR THE 2ND SPEEDOMETER ---- CPU MEMORY OF THE CLUSTER 
       ////// //////////////////////////////////
-      // fetch('http://localhost:8080/api/k8s/promClusterMemoryUtil')
-      // .then((response) => response.json())
-      // .then((data) => {
-      //   setPodNumber(data.length);
-      //   console.log('CPU MEMORY CLUSTER: ', data.length);
-      // });
-
-
-
-
-
-
+       fetch('http://localhost:8080/api/k8s/promClusterMemoryUtil')
+       .then((response) => response.json())
+       .then((data) => {
+         setMem(data);
+       });
 
 },[])
 
@@ -128,23 +120,22 @@ export default function HomeContainer() {
       
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <DoughnutChart />
+          <GaugeChartTemplate
+            chartData={Math.round(cpu * 100) / 100}
+            title='Cluster CPU Usage'
+            label='Cluster CPU Usage'
+          />
         </Grid>
         <Grid item xs={6}>
-          <PieChart />
+        <GaugeChartTemplate
+            chartData={Math.round(mem * 100) / 100}
+            title='Cluster Memory Usage'
+            label='Cluster Memory Usage'
+          />
         </Grid>
       </Grid>
-
-      <ReactSpeedometer
-        maxValue={100}
-        value={31}
-        labelFontSize = {0}
-        needleColor="black"
-        startColor="rgba(75, 192, 192, 1)"
-        segments={100}
-        endColor='rgba(255, 99, 132, 1)'
-  
-      />
+      
+      
       {/* <DoughnutChart /> */}
     </>
   );
