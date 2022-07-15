@@ -61,6 +61,12 @@ export default function HomeContainer() {
       //   setPodNumber(data.length);
       //   console.log('CPU USAGE CLUSTER: ', data.length);
       // });
+      fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
+      .then((response) => response.json())
+      .then((data) => {
+        setPodNumber(data.length);
+        console.log('POD COUNT: ', data.length);
+      });
 
     ////////////////////////////////////////////
       //---- FETCH REQ FOR THE 2ND SPEEDOMETER ---- CPU MEMORY OF THE CLUSTER 
