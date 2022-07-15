@@ -21,8 +21,6 @@ k8sController = {};
 //   console.log(res.body);
 // });
 
-
-
 /*
 {
   nameSpace1: [{podName: "podName1", podIP: x.x.x.x}, {podName: "podName2", podIP: x.x.x.x}, {podName: "podName3", podIP: x.x.x.x}]
@@ -30,16 +28,45 @@ k8sController = {};
 }
 */
 
-
+/* 
+Return data from /namespaceNames and store in variable
+    First return the items array from podResult.response.body.items
+*/
 
 // Getting pod count and pod names
 k8sController.getAllPods = async (req, res, next) => {
   try {
     const podsResult = await k8sApiSvc.listPodForAllNamespaces();
-    res.locals.podData = podsResult;
+    res.locals.podData = podsResult.response.body.items;
     res.locals.podCount = podsResult.body.items;
     const podNames = [];
     const podIps = [];
+    const podData = {};
+    res.locals.podData.forEach((element) => {
+      // if namespace does not exist in podData object
+      if (!podData[element.metadata.namespace]) {
+        // then create namespace as a property and assign podname, podip as values in an object
+        podData[element.metadata.namespace] = [
+          {
+            'Pod Name': element.metadata.name,
+            'Pod IP': element.status.podIP,
+          },
+        ];
+        // else if namespac exists AND
+      } else if (podData[element.metadata.namespace]) {
+        // console.log(
+        //   'ELSE IF POD DATA DOES EXIST',
+        //   podData[element.metadata.namespace]
+        // );
+        podData[element.metadata.namespace].push({
+          'Pod Name': element.metadata.name,
+          'Pod IP': element.status.podIP,
+        });
+      }
+      // console.log('YODA', podData);
+      res.locals.podData = podData;
+    });
+
     podsResult.body.items.forEach((element) => {
       podNames.push(element.metadata.generateName);
       podIps.push(element.status.podIP);
@@ -58,8 +85,6 @@ k8sController.getAllPods = async (req, res, next) => {
     });
   }
 };
-
-
 
 // Getting list of nodes and list of component statuses
 k8sController.getAllNodes = async (req, res, next) => {
