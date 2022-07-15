@@ -10,46 +10,68 @@ import ListItem from '@mui/material/ListItem';
 import DoughnutChart from '../components/DoughnutChart';
 import PieChart from '../components/PieChart';
 import Grid from '@mui/material/Grid';
+import { useEffect, useState } from 'react';
+import GaugeChartTemplate from '../components/GaugeChartTemplate'
 
 export default function HomeContainer() {
   // For our drop down
   const [namespace, setNamespace] = React.useState('');
+  const [cpu, setCpu] = useState(0);
+  const [mem, setMem] = useState(0);
 
   const handleChange = (event) => {
     setNamespace(event.target.value);
   };
+  
+  const [nodesInfo, setNodesInfo] = useState([]);
+  useEffect(() => {
 
-  //dummy data for now
-  const allNodesInfo = [
-    {
-      name: 'Node1',
-      ip: '192.168.56.23',
-      os: 'Linux',
-      pods: '2',
-      color: 'rgba(255, 99, 132, 1)',
-    },
-    {
-      name: 'Node2',
-      ip: '192.168.12.12',
-      os: 'Linux',
-      pods: '2',
-      color: 'rgba(75, 192, 192, 1)',
-    },
-    {
-      name: 'Node3',
-      ip: '255.1.1.9',
-      os: 'Linux',
-      pods: '1',
-      color: 'rgba(54, 162, 235, 1)',
-    },
-    {
-      name: 'Node4',
-      ip: '27.5.5.0',
-      os: 'Linux',
-      pods: '1',
-      color: 'rgba(255, 206, 86, 1)',
-    },
-  ];
+    fetch('/api/k8s/podInfo')
+    .then((response) => response.json())
+    .then((data) => {
+      
+      data.forEach( (element, i) => {
+        
+        //for each node of nodesInfo
+        const node = {};
+
+        node.name = element.metadata.generateName;
+        node.ip = element.status.podIP;
+        //node.os = element.spec.nodeSelector['kubernetes.io/os'];
+        node.os = 'Linux';
+        //assign random color
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        node.color = `rgba(${r},${g},${b},1)`;
+        node.key = {i};
+
+        // nodesInfo.push(node);
+        setNodesInfo((prev) => ([...prev,node]));
+      })
+    });
+
+      console.log(nodesInfo);
+      ////////////////////////////////////////////
+      //---- FETCH REQ FOR THE 1ST SPEEDOMETER ---- CPU USAGE OF THE CLUSTER 
+      ////// //////////////////////////////////
+      fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
+      .then((response) => response.json())
+      .then((data) => {
+        setCpu(data);
+      });
+
+    ////////////////////////////////////////////
+      //---- FETCH REQ FOR THE 2ND SPEEDOMETER ---- CPU MEMORY OF THE CLUSTER 
+      ////// //////////////////////////////////
+       fetch('http://localhost:8080/api/k8s/promClusterMemoryUtil')
+       .then((response) => response.json())
+       .then((data) => {
+         setMem(data);
+       });
+
+},[])
+
 
   return (
     <>
@@ -69,20 +91,8 @@ export default function HomeContainer() {
           </Select>
         </FormControl>
       </Box>
-      {/*
-         //MAKE A FETCH REQUEST TO GET BASIC NODE INFO IN AN ARRAY
-         //array length will the number of cards
-   */}
-
-      {/* <List sx={{ display: 'flex'}}>
-         <ListItem> <BasicCard /> </ListItem>
-         <ListItem> <BasicCard /> </ListItem>
-         <ListItem> <BasicCard /> </ListItem>
-         <ListItem> <BasicCard /> </ListItem>
-      </List> */}
-
-      <List sx={{ display: 'flex' }}>
-        {allNodesInfo.map((node) => (
+      {/* <List sx={{ display: 'flex' }}>
+        {nodesInfo.map((node) => (
           <ListItem>
             <BasicCard
               name={node.name}
@@ -93,15 +103,39 @@ export default function HomeContainer() {
             />
           </ListItem>
         ))}
-      </List>
+      </List> */}
+      <Grid container spacing={2} columns={4}>
+        {nodesInfo.map((node) => (
+            <Grid item xs={0.8}>
+              <BasicCard
+                name={node.name}
+                ip={node.ip}
+                os={node.os}
+                color={node.color}
+              />
+            </Grid>
+
+          ))}
+      </Grid>
+      
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <DoughnutChart />
+          <GaugeChartTemplate
+            chartData={Math.round(cpu * 100) / 100}
+            title='Cluster CPU Usage'
+            label='Cluster CPU Usage'
+          />
         </Grid>
         <Grid item xs={6}>
-          <PieChart />
+        <GaugeChartTemplate
+            chartData={Math.round(mem * 100) / 100}
+            title='Cluster Memory Usage'
+            label='Cluster Memory Usage'
+          />
         </Grid>
       </Grid>
+      
+      
       {/* <DoughnutChart /> */}
     </>
   );
