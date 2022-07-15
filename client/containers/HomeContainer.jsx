@@ -16,9 +16,12 @@ import ReactSpeedometer from "react-d3-speedometer"
 export default function HomeContainer() {
   // For our drop down
   const [namespace, setNamespace] = React.useState('');
+<<<<<<< HEAD
   const [cpu, setCpu] = useState(0);
   const [mem, setMem] = useState(0);
 
+=======
+>>>>>>> dev
   const handleChange = (event) => {
     setNamespace(event.target.value);
   };
@@ -55,22 +58,40 @@ export default function HomeContainer() {
       ////////////////////////////////////////////
       //---- FETCH REQ FOR THE 1ST SPEEDOMETER ---- CPU USAGE OF THE CLUSTER 
       ////// //////////////////////////////////
+<<<<<<< HEAD
       // fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
       // .then((response) => response.json())
       // .then((data) => {
       //   setPodNumber(data.length);
       //   console.log('CPU USAGE CLUSTER: ', data.length);
       // });
+=======
+      fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
+      .then((response) => response.json())
+      .then((data) => {
+        setPodNumber(data.length);
+        console.log('POD COUNT: ', data.length);
+      });
+>>>>>>> dev
 
     ////////////////////////////////////////////
       //---- FETCH REQ FOR THE 2ND SPEEDOMETER ---- CPU MEMORY OF THE CLUSTER 
       ////// //////////////////////////////////
+<<<<<<< HEAD
       // fetch('http://localhost:8080/api/k8s/promClusterMemoryUtil')
       // .then((response) => response.json())
       // .then((data) => {
       //   setPodNumber(data.length);
       //   console.log('CPU MEMORY CLUSTER: ', data.length);
       // });
+=======
+      fetch('http://localhost:8080/api/k8s/promClusterMemoryUtil')
+      .then((response) => response.json())
+      .then((data) => {
+        setPodNumber(data.length);
+        console.log('POD COUNT: ', data.length);
+      });
+>>>>>>> dev
 
 
 

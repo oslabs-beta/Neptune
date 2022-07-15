@@ -21,12 +21,32 @@ k8sController = {};
 //   console.log(res.body);
 // });
 
-// Getting all pods
+
+
+/*
+{
+  nameSpace1: [{podName: "podName1", podIP: x.x.x.x}, {podName: "podName2", podIP: x.x.x.x}, {podName: "podName3", podIP: x.x.x.x}]
+  nameSpace2: [{podName: "podName4", podIP: x.x.x.x}, {podName: "podName5", podIP: x.x.x.x}, {podName: "podName6", podIP: x.x.x.x}]
+}
+*/
+
+
+
+// Getting pod count and pod names
 k8sController.getAllPods = async (req, res, next) => {
   try {
     const podsResult = await k8sApiSvc.listPodForAllNamespaces();
-    res.locals.podList = podsResult.body.items;
-    //console.log('POD COUNT:', res.locals.podList.body.items.length);
+    res.locals.podData = podsResult;
+    res.locals.podCount = podsResult.body.items;
+    const podNames = [];
+    const podIps = [];
+    podsResult.body.items.forEach((element) => {
+      podNames.push(element.metadata.generateName);
+      podIps.push(element.status.podIP);
+    });
+    res.locals.podNames = podNames;
+    res.locals.podIps = podIps;
+    res.locals.info = podsResult.body.items;
     return next();
   } catch (err) {
     return next({
@@ -38,6 +58,8 @@ k8sController.getAllPods = async (req, res, next) => {
     });
   }
 };
+
+
 
 // Getting list of nodes and list of component statuses
 k8sController.getAllNodes = async (req, res, next) => {
@@ -59,14 +81,16 @@ k8sController.getAllNodes = async (req, res, next) => {
   }
 };
 
-// Getting all namespaces
+// Getting number of namespaces and their names
 k8sController.getAllNamespaces = async (req, res, next) => {
   try {
     const namespaceResult = await k8sApiSvc.listNamespace();
-    res.locals.namespace = namespaceResult;
-    // const namespaceList = res.locals.namespace.map(name => {
-
-    // })
+    res.locals.namespace = namespaceResult.response.body.items;
+    const namespaceNames = [];
+    namespaceResult.response.body.items.forEach((element) => {
+      namespaceNames.push(element.metadata.name);
+    });
+    res.locals.namespaceNames = namespaceNames;
     return next();
   } catch (err) {
     return next({
@@ -101,7 +125,6 @@ k8sController.getService = async (req, res, next) => {
   try {
     const getService = await k8sApiSvc.listServiceForAllNamespaces();
     res.locals.service = getService.body.items;
-    console.log('SERVICE COUNT:', getService.body.items);
     return next();
   } catch (err) {
     return next({

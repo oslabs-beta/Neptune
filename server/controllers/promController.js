@@ -1,5 +1,7 @@
 // kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 --namespace=default 9090:9090
 
+const { response } = require('express');
+
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
@@ -25,17 +27,6 @@ promController.promNamespaces = async (req, res, next) => {
   }
 };
 
-// promController.isUp = async (req, res, next) => {
-//   const queryStr = `${queryURL}alerts`;
-//   try {
-//     const response = await fetch(queryStr);
-//     res.locals.query = await response.json();
-//     return next();
-//   } catch (err) {
-//     return next(err);
-//   }
-// };
-
 promController.isUp = (req, res, next) => {
   const queryStr = `${queryURL}query?query=up`;
   fetch(queryStr)
@@ -50,8 +41,10 @@ promController.isUp = (req, res, next) => {
     });
 };
 
-//CLUSTER - Total CPU Cores
+/////////////////////////////////////////////////////////////////////////////----------------------------CLUSTERS--------------------------////////////
+/////////////////////////////////////////////////////////////////////////////
 
+//CLUSTER - Total CPU Cores
 promController.promClusterCpuCore = async (req, res, next) => {
   try {
     const response = await fetch(
@@ -67,21 +60,74 @@ promController.promClusterCpuCore = async (req, res, next) => {
   }
 };
 
-// CLUSTER - Memory usage
-
-promController.promClusterMemory = async (req, res, next) => {
+// CLUSTER - CPU USAGE
+promController.promClusterCpuPct = async (req, res, next) => {
   try {
     const response = await fetch(
-      `${queryURL}query?query=(1-sum(kube_node_status_allocatable{resource="memory", unit="byte"})/sum(kube_node_status_capacity{resource="memory", unit="byte"}))*100`
+      `${queryURL}query?query=1 - sum(avg by (mode) (rate(node_cpu_seconds_total{job="node-exporter", mode=~"idle|iowait|steal"}[10m])))`
     );
-    res.locals.promClusterMemory = await response.json();
-    res.locals.promClusterMemory =
-      res.locals.promClusterMemory.data.result[0].value[1];
+    data = await response.json();
+    data = Number(data.data.result[0].value[1]) * 100;
+    res.locals.promClusterCpuPct = data
+    console.log('ICE CREAM', res.locals.promClusterCpuPct)
     return next();
   } catch (err) {
     return next(err);
   }
 };
+
+
+
+// CLUSTER - TOTAL MEMORY
+promController.promClusterMemoryTotal = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=sum(container_memory_working_set_bytes)`
+    );
+    data = await response.json();
+    res.locals.promClusterMemoryTotal = data.data.result[0].value[1]
+    console.log('MEMORY TOTAL', res.locals.promClusterMemoryTotal);
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// CLUSTER - MEMORY UTILIZATION
+
+promController.promClusterMemoryUtil = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=node_memory_Active_bytes/node_memory_MemTotal_bytes`
+    );
+    data = await response.json();
+    data = (data.data.result[0].value[1]) * 100
+    res.locals.promClusterMemoryUtil = data.toFixed(2)
+    console.log('MEMORY USAGE', res.locals.promClusterMemoryUtil);
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// CLUSTER - TOTAL MEMORY
+
+promController.promClusterMemoryTotal = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=sum(container_memory_working_set_bytes)`
+    );
+    data = await response.json();
+    res.locals.promClusterMemoryTotal = data.data.result[0].value[1];
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+
+/////////////////////////////////////////////////////////////////////////////----------------------------NODES--------------------------////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // NODE - CPU usage
 promController.promNodeCpu = async (req, res, next) => {
@@ -91,7 +137,6 @@ promController.promNodeCpu = async (req, res, next) => {
     );
     res.locals.promNodeCpu = await response.json();
     res.locals.promNodeCpu = res.locals.promNodeCpu.data;
-    console.log(res.locals.promNodeCpu);
     return next();
   } catch (err) {
     return next(err);
@@ -99,12 +144,96 @@ promController.promNodeCpu = async (req, res, next) => {
 };
 
 // NODE - Memory usage
-// NODE - Return all pods from a node
-// NODE - Return pod capacity of node as a number
-// NODE - Return network utilization
-// NODE - Return network errors
+promController.promNodeMemory = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=(1-sum(kube_node_status_allocatable{resource="memory",unit="byte",node="minikube"})/sum(kube_node_status_capacity{resource="memory",unit="byte",node="minikube"}))*100`
+    );
+    res.locals.promNodeMemory = await response.json();
+    res.locals.promNodeMemory = parseInt(
+      res.locals.promNodeMemory.data.result[0].value[1]
+    );
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
 
-// POD - Return pod info as an array of objects
-// {name, node, namespace}
+// NODE - Return all pods from a node
+
+// NODE - Return pod capacity of node as a number
+promController.promNodePodCap = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=kube_node_status_capacity{resource="pods"}`
+    );
+    res.locals.promNodePodCap = await response.json();
+    res.locals.promNodePodCap = parseInt(
+      res.locals.promNodePodCap.data.result[0].value[1]
+    );
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// NODE - Return network utilization
+promController.promNodeNetUtil = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=sum(rate(container_network_receive_bytes_total[5m]))`
+    );
+    res.locals.promNodeNetUtil = await response.json();
+    console.log(res.locals.promNodeNetUtil)
+    // res.locals.promNodeNetUtil = Number(
+    //   res.locals.promNodeNetUtil.data.result[0].value[1]
+    // );
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+// NODE - Return network errors
+promController.promNodeNetErr = async (req, res, next) => {
+  try {
+    const response1 = await fetch(
+      `${queryURL}query?query=sum(node_network_receive_errs_total)`
+    );
+    const receiveErr = await response1.json();
+
+    const response2 = await fetch(
+      `${queryURL}query?query=sum(node_network_transmit_errs_total)`
+    );
+    const transmitErr = await response2.json();
+
+    const networkErrors = Math.floor(
+      (parseInt(receiveErr.data.result[0].value[1]) +
+        parseInt(transmitErr.data.result[0].value[1])) /
+        1024
+    );
+
+    res.locals.promNodeNetErr = networkErrors;
+
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// ALERTS
+promController.promAlerts = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}alerts`
+    );
+    data = await response.json();
+    res.locals.promAlerts = data.data.alerts;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+
 
 module.exports = promController;

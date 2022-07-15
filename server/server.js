@@ -1,5 +1,3 @@
-// kubectl port-forward -n default svc/prometheus-kube-prometheus-prometheus 9090
-
 // const exp = require('constants');
 const express = require('express');
 const path = require('path');
@@ -13,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.resolve(__dirname, '../build')));
+// app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.use('/api/k8s', k8sRouter);
 // app.use('/api/prom', promRouter);

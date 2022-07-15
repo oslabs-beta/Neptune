@@ -23,11 +23,11 @@ export default function DetailsContainer() {
   // useEffect counts the state
   useEffect(() => {
     // return pod count
-    fetch('http://localhost:8080/api/k8s/pod')
+    fetch('http://localhost:8080/api/k8s/podCount')
       .then((response) => response.json())
       .then((data) => {
         setPodNumber(data.length);
-        console.log('POD COUNT: ', data);
+        console.log('POD COUNT: ', data.length);
       });
 
     // return node count
@@ -35,7 +35,7 @@ export default function DetailsContainer() {
       .then((response) => response.json())
       .then((data) => {
         setNodeNumber(data.length);
-        console.log('NODE COUNT: ', data);
+        console.log('NODE COUNT: ', data.length);
       });
 
     // return deployment count
@@ -43,7 +43,7 @@ export default function DetailsContainer() {
       .then((response) => response.json())
       .then((data) => {
         setDeplNumber(data.length);
-        console.log('DEPL COUNT: ', data);
+        console.log('DEPL COUNT: ', data.length);
       });
 
     // return services count
@@ -51,15 +51,15 @@ export default function DetailsContainer() {
       .then((response) => response.json())
       .then((data) => {
         setServiceNumber(data.length);
-        console.log('SERVICES COUNT: ', data);
+        console.log('SERVICES COUNT: ', data.length);
       });
 
     // fetch req for namespaces
-    fetch('http://localhost:8080/api/k8s/promNamespaces')
+    fetch('http://localhost:8080/api/k8s/namespace')
       .then((response) => response.json())
       .then((data) => {
         setNamespaceNumber(data.length);
-        console.log('NAMESPACEX COUNT', data);
+        console.log('NAMESPACEX COUNT', data.length);
       });
   }, []);
 
@@ -76,22 +76,34 @@ export default function DetailsContainer() {
       </List>
 
       <h1> This is cluster section</h1>
-      
+
       <h2>below is node section</h2>
 
       <Grid container spacing={4}>
-        <Grid item xs={6} > <LineChart/> </Grid>
-        <Grid item xs={6} > <VerticalLineChart/> </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <LineChart />{' '}
+        </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <VerticalLineChart />{' '}
+        </Grid>
       </Grid>
       <br />
       <br />
       <br />
       <br />
       <Grid container spacing={4}>
-        <Grid item xs={6} > <PolarAreaChart/> </Grid>
-        <Grid item xs={6} > <AreaChart/> </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <PolarAreaChart />{' '}
+        </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <AreaChart />{' '}
+        </Grid>
       </Grid>
-      
+
       <h1> This is details container</h1>
     </>
   );
