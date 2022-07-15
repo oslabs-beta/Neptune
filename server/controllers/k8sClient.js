@@ -35,6 +35,7 @@ k8sController.getAllPods = async (req, res, next) => {
     });
     res.locals.podNames = podNames;
     res.locals.podIps = podIps;
+    res.locals.info = podsResult.body.items;
     return next();
   } catch (err) {
     return next({
@@ -46,6 +47,8 @@ k8sController.getAllPods = async (req, res, next) => {
     });
   }
 };
+
+
 
 // Getting list of nodes and list of component statuses
 k8sController.getAllNodes = async (req, res, next) => {

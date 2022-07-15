@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function BasicCard({name, ip, os, pods, color}) {
+export default function BasicCard({name, ip, os, color}) {
     return (
 <Card sx={{ minWidth: 275, border: "1px solid", padding: "10px", boxShadow: `5px 10px ${color}` }}>
       <CardContent>
@@ -18,9 +18,6 @@ export default function BasicCard({name, ip, os, pods, color}) {
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           OS: {os}
-        </Typography>
-        <Typography variant="body2">
-          Number of pods:{pods}
         </Typography>
       </CardContent>
       <CardActions>

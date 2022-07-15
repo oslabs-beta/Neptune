@@ -116,13 +116,13 @@ export default function MiniDrawer({ children }) {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+            <img src = {neptune2} width="60"/>
           </IconButton>
           <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
             <Typography variant="h6" noWrap component="div" sx={{ display: 'flex', alignItems:'center' }}>
               <Box mr={1}>
                   
-                  <img src = {neptune2} width="70"/>
+                  {/* <img src = {neptune2} width="70"/> */}
               </Box>
             
             </Typography>
@@ -130,7 +130,7 @@ export default function MiniDrawer({ children }) {
         </Toolbar>
       </AppBar>
       
-      <Drawer variant="permanent" open={open}  >
+      <Drawer variant="permanent" open={open} >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}

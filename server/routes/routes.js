@@ -17,6 +17,10 @@ k8sRouter.get('/podIps', k8sController.getAllPods, (req, res) => {
   return res.status(200).json(res.locals.podIps);
 });
 
+k8sRouter.get('/podInfo', k8sController.getAllPods, (req, res) => {
+  return res.status(200).json(res.locals.info);
+});
+
 /////////////////////////////////////////////////////////////////////////////-------------------------------NODES-----------------------------////////////
 /////////////////////////////////////////////////////////////////////////////
 
