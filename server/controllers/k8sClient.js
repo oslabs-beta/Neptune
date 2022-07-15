@@ -21,12 +21,23 @@ k8sController = {};
 //   console.log(res.body);
 // });
 
+
+
+/*
+{
+  nameSpace1: [{podName: "podName1", podIP: x.x.x.x}, {podName: "podName2", podIP: x.x.x.x}, {podName: "podName3", podIP: x.x.x.x}]
+  nameSpace2: [{podName: "podName4", podIP: x.x.x.x}, {podName: "podName5", podIP: x.x.x.x}, {podName: "podName6", podIP: x.x.x.x}]
+}
+*/
+
+
+
 // Getting pod count and pod names
 k8sController.getAllPods = async (req, res, next) => {
   try {
     const podsResult = await k8sApiSvc.listPodForAllNamespaces();
+    res.locals.podData = podsResult;
     res.locals.podCount = podsResult.body.items;
-
     const podNames = [];
     const podIps = [];
     podsResult.body.items.forEach((element) => {
@@ -114,7 +125,6 @@ k8sController.getService = async (req, res, next) => {
   try {
     const getService = await k8sApiSvc.listServiceForAllNamespaces();
     res.locals.service = getService.body.items;
-    console.log('SERVICE COUNT:', getService.body.items);
     return next();
   } catch (err) {
     return next({

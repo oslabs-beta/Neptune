@@ -16,6 +16,9 @@ k8sRouter.get('/podNames', k8sController.getAllPods, (req, res) => {
 k8sRouter.get('/podIps', k8sController.getAllPods, (req, res) => {
   return res.status(200).json(res.locals.podIps);
 });
+k8sRouter.get('/podData', k8sController.getAllPods, (req, res) => {
+  return res.status(200).json(res.locals.podData);
+});
 
 k8sRouter.get('/podInfo', k8sController.getAllPods, (req, res) => {
   return res.status(200).json(res.locals.info);
@@ -123,7 +126,9 @@ k8sRouter.get('/services', k8sController.getService, (req, res) => {
  *
  * ************************************
  */
-// Prometheus route handlers
+////////////////////////////////////////////////////////////////////////////
+//---------PROMETHEUS ROUTE HANDLERS-----------////
+/////////////////////////////////////////////////////////////////////////////
 
 // TESTING NAMESPACES ******************** JIN
 k8sRouter.get('/promNamespaces', promController.promNamespaces, (req, res) => {
@@ -134,8 +139,10 @@ k8sRouter.get('/promNamespaces', promController.promNamespaces, (req, res) => {
 k8sRouter.get('/promStatus', promController.isUp, (req, res) => {
   return res.status(200).json(res.locals.query);
 });
-
-// Prometheus cluster CPU usage
+////////////////////////////////////////////////////////////////////////////
+//---------PROMETHEUS CLUSTER -----------////
+/////////////////////////////////////////////////////////////////////////////
+// PROMETHEUS CPU CORES
 k8sRouter.get(
   '/promClusterCpuCore',
   promController.promClusterCpuCore,
@@ -144,18 +151,43 @@ k8sRouter.get(
   }
 );
 
-// Prometheus cluster Memory usage
+// PROMETHEUS CPU UTILIZATION
 k8sRouter.get(
-  '/promClusterMemory',
-  promController.promClusterMemory,
+  '/promClusterCpuPct',
+  promController.promClusterCpuPct,
   (req, res) => {
-    return res.status(200).json(res.locals.promClusterMemory);
+    return res.status(200).json(res.locals.promClusterCpuPct);
   }
 );
 
+// // PROMETHEUS CLUSTER MEMORY UTILIZATION
+k8sRouter.get(
+  '/promClusterMemoryUtil',
+  promController.promClusterMemoryUtil,
+  (req, res) => {
+    return res.status(200).json(res.locals.promClusterMemoryUtil);
+  }
+);
+
+// // PROMETHEUS CLUSTER MEMORY TOTAL
+k8sRouter.get(
+  '/promClusterMemoryTotal',
+  promController.promClusterMemoryTotal,
+  (req, res) => {
+    return res.status(200).json(res.locals.promClusterMemoryTotal);
+  }
+);
+////////////////////////////////////////////////////////////////////////////
+//---------PROMETHEUS NODES -----------////
+/////////////////////////////////////////////////////////////////////////////
 // Prometheus node CPU usage
 k8sRouter.get('/promNodeCpu', promController.promNodeCpu, (req, res) => {
   return res.status(200).json(res.locals.promNodeCpu);
+});
+
+
+k8sRouter.get('/promAlerts', promController.promAlerts, (req, res) => {
+  return res.status(200).json(res.locals.promAlerts);
 });
 
 module.exports = k8sRouter;
