@@ -50,7 +50,7 @@ function GaugeChartTemplate({ chartData, title, label }) {
     layout: {
       padding: {
         top: '-50',
-      },
+      }, 
     },
     pointRadius: 0,
     circumference: '180',
@@ -91,7 +91,7 @@ function GaugeChartTemplate({ chartData, title, label }) {
       <Typography variant='body1' color='text.secondary'>
         {title}
       </Typography>
-      <Doughnut options={options} data={data} />
+      <Doughnut options={options} data={data} className='gaugeChartClass' />
     </>
   );
 }

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomeContainer from './containers/HomeContainer';
+import DetailsContainer from './containers/DetailsContainer';
 import MiniDrawer from './containers/MiniDrawer';
 import { Container } from '@mui/material';
-import DetailsContainer from './containers/DetailsContainer';
 import NotisContainer from './containers/NotisContainer';
 import QueryContainer from './containers/QueryContainer';
+import HomeContainer from './containers/HomeContainer';
 
 
 
