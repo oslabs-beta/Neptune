@@ -45,13 +45,12 @@ const config = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.css$/i,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           'style-loader',
           'css-loader',
-          'sass-loader',
         ],
       },
       {

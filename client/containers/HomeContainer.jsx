@@ -1,142 +1,120 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import BasicCard from '../components/BasicCard';
+import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import DoughnutChart from '../components/DoughnutChart';
-import PieChart from '../components/PieChart';
+import Node from '../components/Node';
+import Pods from '../components/Pods';
+import Depl from '../components/Depl';
+import Service from '../components/Service';
+import Namespace from '../components/Namespace';
+import LineChart from '../components/LineChart';
 import Grid from '@mui/material/Grid';
-import { useEffect, useState } from 'react';
-import GaugeChartTemplate from '../components/GaugeChartTemplate'
+import VerticalLineChart from '../components/VerticalLineChart';
+import PolarAreaChart from '../components/PolarAreaChart';
+import AreaChart from '../components/AreaChart';
 
 export default function HomeContainer() {
-  // For our drop down
-  const [namespace, setNamespace] = React.useState('');
-  const [cpu, setCpu] = useState(0);
-  const [mem, setMem] = useState(0);
+  //fetch request originally in  Pods.jsx
+  const [podNumber, setPodNumber] = useState([]);
+  const [nodeNumber, setNodeNumber] = useState([]);
+  const [deplNumber, setDeplNumber] = useState([]);
+  const [serviceNumber, setServiceNumber] = useState([]);
+  const [namespaceNumber, setNamespaceNumber] = useState([]);
 
-  const handleChange = (event) => {
-    setNamespace(event.target.value);
-  };
-  
-  const [nodesInfo, setNodesInfo] = useState([]);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// --- FETCH REQ FROM KUBERNETES DASHBOARD ------//////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // useEffect counts the state
   useEffect(() => {
-
-    fetch('/api/k8s/podInfo')
-    .then((response) => response.json())
-    .then((data) => {
-      
-      data.forEach( (element, i) => {
-        
-        //for each node of nodesInfo
-        const node = {};
-
-        node.name = element.metadata.generateName;
-        node.ip = element.status.podIP;
-        //node.os = element.spec.nodeSelector['kubernetes.io/os'];
-        node.os = 'Linux';
-        //assign random color
-        const r = Math.floor(Math.random() * 255);
-        const g = Math.floor(Math.random() * 255);
-        const b = Math.floor(Math.random() * 255);
-        node.color = `rgba(${r},${g},${b},1)`;
-        node.key = {i};
-
-        // nodesInfo.push(node);
-        setNodesInfo((prev) => ([...prev,node]));
-      })
-    });
-
-      console.log(nodesInfo);
-      ////////////////////////////////////////////
-      //---- FETCH REQ FOR THE 1ST SPEEDOMETER ---- CPU USAGE OF THE CLUSTER 
-      ////// //////////////////////////////////
-      fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
+    // return pod count
+    fetch('http://localhost:8080/api/k8s/podCount')
       .then((response) => response.json())
       .then((data) => {
-        setCpu(data);
+        setPodNumber(data.length);
+        console.log('POD COUNT: ', data.length);
       });
 
-    ////////////////////////////////////////////
-      //---- FETCH REQ FOR THE 2ND SPEEDOMETER ---- CPU MEMORY OF THE CLUSTER 
-      ////// //////////////////////////////////
-       fetch('http://localhost:8080/api/k8s/promClusterMemoryUtil')
-       .then((response) => response.json())
-       .then((data) => {
-         setMem(data);
-       });
+    // return node count
+    fetch('http://localhost:8080/api/k8s/node')
+      .then((response) => response.json())
+      .then((data) => {
+        setNodeNumber(data.length);
+        console.log('NODE COUNT: ', data.length);
+      });
 
-},[])
+    // return deployment count
+    fetch('http://localhost:8080/api/k8s/deployment')
+      .then((response) => response.json())
+      .then((data) => {
+        setDeplNumber(data.length);
+        console.log('DEPL COUNT: ', data.length);
+      });
+
+    // return services count
+    fetch('http://localhost:8080/api/k8s/services')
+      .then((response) => response.json())
+      .then((data) => {
+        setServiceNumber(data.length);
+        console.log('SERVICES COUNT: ', data.length);
+      });
+
+    // fetch req for namespaces
+    fetch('http://localhost:8080/api/k8s/namespace')
+      .then((response) => response.json())
+      .then((data) => {
+        setNamespaceNumber(data.length);
+        console.log('NAMESPACEX COUNT', data.length);
+      });
+  }, []);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// --- FETCH REQ FROM PROMETHEUS ------//////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   return (
     <>
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id='demo-simple-select-label'>Namespace</InputLabel>
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            value={namespace}
-            label='Namespace'
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Namespace 1</MenuItem>
-            <MenuItem value={20}>Namespace 2</MenuItem>
-            <MenuItem value={30}>Namespace 3</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-      {/* <List sx={{ display: 'flex' }}>
-        {nodesInfo.map((node) => (
-          <ListItem>
-            <BasicCard
-              name={node.name}
-              ip={node.ip}
-              os={node.os}
-              pods={node.pods}
-              color={node.color}
-            />
-          </ListItem>
-        ))}
-      </List> */}
-      <Grid container spacing={2} columns={4}>
-        {nodesInfo.map((node) => (
-            <Grid item xs={0.8}>
-              <BasicCard
-                name={node.name}
-                ip={node.ip}
-                os={node.os}
-                color={node.color}
-              />
-            </Grid>
+      <List sx={{ display: 'flex' }}>
+        <ListItem>
+          <Node nodeNumber={nodeNumber} key={1} />
+          <Pods podNumber={podNumber} key={2} />
+          <Depl deplNumber={deplNumber} key={3} />
+          <Service serviceNumber={serviceNumber} key={4} />
+          <Namespace namespaceNumber={namespaceNumber} key={5} />
+        </ListItem>
+      </List>
 
-          ))}
-      </Grid>
-      
-      <Grid container spacing={2}>
+      <h1> This is cluster section</h1>
+
+      <h2>below is node section</h2>
+
+      <Grid container spacing={4}>
         <Grid item xs={6}>
-          <GaugeChartTemplate
-            chartData={Math.round(cpu * 100) / 100}
-            title='Cluster CPU Usage'
-            label='Cluster CPU Usage'
-          />
+          {' '}
+          <LineChart />{' '}
         </Grid>
         <Grid item xs={6}>
-        <GaugeChartTemplate
-            chartData={Math.round(mem * 100) / 100}
-            title='Cluster Memory Usage'
-            label='Cluster Memory Usage'
-          />
+          {' '}
+          <VerticalLineChart />{' '}
         </Grid>
       </Grid>
-      
-      
-      {/* <DoughnutChart /> */}
+      <br />
+      <br />
+      <br />
+      <br />
+      <Grid container spacing={4}>
+        <Grid item xs={6}>
+          {' '}
+          <PolarAreaChart />{' '}
+        </Grid>
+        <Grid item xs={6}>
+          {' '}
+          <AreaChart />{' '}
+        </Grid>
+      </Grid>
+
+      <h1> This is details container</h1>
     </>
   );
 }
