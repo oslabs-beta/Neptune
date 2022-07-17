@@ -15,15 +15,40 @@ import GaugeChartTemplate from '../components/GaugeChartTemplate'
 
 export default function DetailsContainer() {
   // For our drop down
-  const [namespace, setNamespace] = React.useState('');
   const [cpu, setCpu] = useState(0);
   const [mem, setMem] = useState(0);
+  const [podData, setPodData] = useState({});
+  const [podsInfo, setPodsInfo] = useState([]);
 
   const handleChange = (event) => {
-    setNamespace(event.target.value);
+    console.log(event.target.value);
+    const data = event.target.value;
+
+    const pods = [];
+    data.forEach( (element, i) => {
+        
+      //for each pod of podsInfo
+      const pod = {};
+
+      pod.name = element['Pod Name'];
+      pod.ip = element['Pod IP'];
+      pod.os = 'Linux';
+
+      //assign random color
+      const r = Math.floor(Math.random() * 255);
+      const g = Math.floor(Math.random() * 255);
+      const b = Math.floor(Math.random() * 255);
+      pod.color = `rgba(${r},${g},${b},1)`;
+      pod.key = {i};
+
+      pods.push(pod);
+    })
+
+    
+    setPodsInfo(pods);
   };
   
-  const [nodesInfo, setNodesInfo] = useState([]);
+  
   useEffect(() => {
 
     fetch('/api/k8s/podInfo')
@@ -32,44 +57,45 @@ export default function DetailsContainer() {
       
       data.forEach( (element, i) => {
         
-        //for each node of nodesInfo
-        const node = {};
+        //for each pod of podsInfo
+        const pod = {};
 
-        node.name = element.metadata.generateName;
-        node.ip = element.status.podIP;
-        //node.os = element.spec.nodeSelector['kubernetes.io/os'];
-        node.os = 'Linux';
+        pod.name = element.metadata.generateName;
+        pod.ip = element.status.podIP;
+        pod.os = 'Linux';
         //assign random color
         const r = Math.floor(Math.random() * 255);
         const g = Math.floor(Math.random() * 255);
         const b = Math.floor(Math.random() * 255);
-        node.color = `rgba(${r},${g},${b},1)`;
-        node.key = {i};
+        pod.color = `rgba(${r},${g},${b},1)`;
+        pod.key = {i};
 
-        // nodesInfo.push(node);
-        setNodesInfo((prev) => ([...prev,node]));
+        setPodsInfo((prev) => ([...prev,pod]));
       })
     });
 
-      console.log(nodesInfo);
-      ////////////////////////////////////////////
+      //console.log(podsInfo);
       //---- FETCH REQ FOR THE 1ST SPEEDOMETER ---- CPU USAGE OF THE CLUSTER 
-      ////// //////////////////////////////////
       fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
       .then((response) => response.json())
       .then((data) => {
         setCpu(data);
       });
 
-    ////////////////////////////////////////////
       //---- FETCH REQ FOR THE 2ND SPEEDOMETER ---- CPU MEMORY OF THE CLUSTER 
-      ////// //////////////////////////////////
        fetch('http://localhost:8080/api/k8s/promClusterMemoryUtil')
        .then((response) => response.json())
        .then((data) => {
          setMem(data);
        });
 
+    // get pod info based for each namespace
+    fetch('/api/k8s/podData')
+       .then((response) => response.json())
+       .then((data) => {
+         setPodData(data);
+       });
+    
 },[])
 
 
@@ -81,39 +107,33 @@ export default function DetailsContainer() {
           <Select
             labelId='demo-simple-select-label'
             id='demo-simple-select'
-            value={namespace}
+            value={podData['default']}
             label='Namespace'
             onChange={handleChange}
           >
-            <MenuItem value={10}>Namespace 1</MenuItem>
+            
+            {/* <MenuItem value={10}>Namespace 1</MenuItem>
             <MenuItem value={20}>Namespace 2</MenuItem>
-            <MenuItem value={30}>Namespace 3</MenuItem>
+            <MenuItem value={30}>Namespace 3</MenuItem> */}
+            {Object.keys(podData).map(namespace => (
+              <MenuItem value={podData[namespace]}>{namespace}</MenuItem>
+            ))}
+
+
           </Select>
         </FormControl>
         <br />
         <br />
       </Box>
-      {/* <List sx={{ display: 'flex' }}>
-        {nodesInfo.map((node) => (
-          <ListItem>
-            <BasicCard
-              name={node.name}
-              ip={node.ip}
-              os={node.os}
-              pods={node.pods}
-              color={node.color}
-            />
-          </ListItem>
-        ))}
-      </List> */}
+      
       <Grid container spacing={2} columns={4}>
-        {nodesInfo.map((node) => (
+        {podsInfo.map((pod) => (
             <Grid item xs={0.8}>
               <BasicCard
-                name={node.name}
-                ip={node.ip}
-                os={node.os}
-                color={node.color}
+                name={pod.name}
+                ip={pod.ip}
+                os={pod.os}
+                color={pod.color}
               />
             </Grid>
 
