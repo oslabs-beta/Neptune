@@ -2,6 +2,7 @@ const express = require('express');
 const k8sRouter = express.Router();
 const k8sController = require('../controllers/k8sClient');
 const promController = require('../controllers/promController');
+const queryController = require('../controllers/queryController');
 
 /////////////////////////////////////////////////////////////////////////////-------------------------------PODS-----------------------------////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -56,9 +57,13 @@ k8sRouter.get('/promNodePodCap', promController.promNodePodCap, (req, res) => {
 });
 
 // returns node network utilization
-k8sRouter.get('/promNodeNetUtil', promController.promNodeNetUtil, (req, res) => {
-  return res.status(200).json(res.locals.promNodeNetUtil);
-});
+k8sRouter.get(
+  '/promNodeNetUtil',
+  promController.promNodeNetUtil,
+  (req, res) => {
+    return res.status(200).json(res.locals.promNodeNetUtil);
+  }
+);
 
 // returns node network errors
 k8sRouter.get('/promNodeNetErr', promController.promNodeNetErr, (req, res) => {
@@ -71,9 +76,6 @@ k8sRouter.get('/promNodePods', promController.promNodePods, (req, res) => {
   return res.status(200).json(res.locals.promNodePods);
 });
 */
-
-
-
 
 // return network errors
 // k8sRouter.get(
@@ -185,9 +187,30 @@ k8sRouter.get('/promNodeCpu', promController.promNodeCpu, (req, res) => {
   return res.status(200).json(res.locals.promNodeCpu);
 });
 
-
 k8sRouter.get('/promAlerts', promController.promAlerts, (req, res) => {
   return res.status(200).json(res.locals.promAlerts);
+});
+
+////////////////////////////////////////////////////////////////////////////
+//---------QUERIES -----------////
+/////////////////////////////////////////////////////////////////////////////
+
+k8sRouter.get('/allQueries', queryController.allQueries, (req, res) => {
+  return res.status(200).json(res.locals.allQueries);
+});
+
+// Memory in bytes for all namespaces
+k8sRouter.get(
+  '/memoryAllNamespaces',
+  queryController.memoryAllNamespaces,
+  (req, res) => {
+    return res.status(200).json(res.locals.memoryAllNamespaces);
+  }
+);
+
+// Memory in bytes for all pods
+k8sRouter.get('/memoryAllPods', queryController.memoryAllPods, (req, res) => {
+  return res.status(200).json(res.locals.memoryAllPods);
 });
 
 module.exports = k8sRouter;

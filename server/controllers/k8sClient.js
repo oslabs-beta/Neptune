@@ -16,23 +16,6 @@ const k8sApiDepl = kc.makeApiClient(k8s.AppsV1Api); // Queries deployments
 
 k8sController = {};
 
-// // example from official github repo
-// k8sApiSvc.listNamespacedPod('default').then((res) => {
-//   console.log(res.body);
-// });
-
-/*
-{
-  nameSpace1: [{podName: "podName1", podIP: x.x.x.x}, {podName: "podName2", podIP: x.x.x.x}, {podName: "podName3", podIP: x.x.x.x}]
-  nameSpace2: [{podName: "podName4", podIP: x.x.x.x}, {podName: "podName5", podIP: x.x.x.x}, {podName: "podName6", podIP: x.x.x.x}]
-}
-*/
-
-/* 
-Return data from /namespaceNames and store in variable
-    First return the items array from podResult.response.body.items
-*/
-
 // Getting pod count and pod names
 k8sController.getAllPods = async (req, res, next) => {
   try {
@@ -54,10 +37,6 @@ k8sController.getAllPods = async (req, res, next) => {
         ];
         // else if namespac exists AND
       } else if (podData[element.metadata.namespace]) {
-        // console.log(
-        //   'ELSE IF POD DATA DOES EXIST',
-        //   podData[element.metadata.namespace]
-        // );
         podData[element.metadata.namespace].push({
           'Pod Name': element.metadata.name,
           'Pod IP': element.status.podIP,
@@ -89,9 +68,15 @@ k8sController.getAllPods = async (req, res, next) => {
 // Getting list of nodes and list of component statuses
 k8sController.getAllNodes = async (req, res, next) => {
   const { name } = req.params;
+  const nodeNames = [];
   try {
     const nodeResult = await k8sApiSvc.listNode(name);
-    res.locals.nodeList = nodeResult.response.body.items;
+    nodeResult.response.body.items.forEach((element) => {
+      nodeNames.push(element.metadata.name);
+    });
+    console.log('HYUNDAI', nodeNames);
+
+    res.locals.nodeList = nodeNames;
     // const nodeStatus = await k8sApiSvc.listComponentStatus();
     // res.locals.nodeList.nodeStatus = nodeStatus.body;
     return next();
