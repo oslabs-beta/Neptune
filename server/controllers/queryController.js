@@ -1,7 +1,4 @@
 // const { data } = require('../../client/components/PieChart');
-
-const { query } = require('express');
-
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const queryURL = 'http://127.0.0.1:9090/api/v1/';
@@ -15,9 +12,16 @@ queryController.allQueries = async (req, res, next) => {
     res.locals.allQueries = data.data;
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from allQueries in queryController',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from allQueries',
+      },
+    });
   }
 };
+
 // Memory in bytes for all namespaces, returned in object, key is name of namespace, value is an array with data
 queryController.memoryAllNamespaces = async (req, res, next) => {
   let start = new Date();
@@ -27,7 +31,6 @@ queryController.memoryAllNamespaces = async (req, res, next) => {
   let startDateTime = end.toISOString();
   const memoryCache = {};
   const query = `${queryURL}query_range?query=sum(container_memory_working_set_bytes) by (namespace)&start=${startDateTime}&end=${endDateTime}&step=30m`;
-  console.log(query);
   try {
     const response = await fetch(query);
     data = await response.json();
@@ -39,12 +42,17 @@ queryController.memoryAllNamespaces = async (req, res, next) => {
     res.locals.memoryAllNamespaces = memoryCache;
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from memoryAllNamespaces in queryController',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from memoryAllNamespaces',
+      },
+    });
   }
 };
 
 // Memory in bytes for all pods, returned in object, key is name of namespace, value is an array with data
-// http://127.0.0.1:9090/api/v1/query_range?query=sum(container_memory_working_set_bytes) by (pod)&start=2022-07-17T00:51:34.537Z&end=2022-07-18T00:51:34.537Z&step=30m
 queryController.memoryAllPods = async (req, res, next) => {
   let start = new Date();
   let end = new Date(start.getTime());
@@ -53,7 +61,6 @@ queryController.memoryAllPods = async (req, res, next) => {
   let startDateTime = end.toISOString();
   const memoryCache = {};
   const query = `${queryURL}query_range?query=sum(container_memory_working_set_bytes) by (pod)&start=${startDateTime}&end=${endDateTime}&step=30m`;
-  console.log(query);
   try {
     const response = await fetch(query);
     data = await response.json();
@@ -65,10 +72,17 @@ queryController.memoryAllPods = async (req, res, next) => {
     res.locals.memoryAllPods = memoryCache;
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from memoryAllPods in queryController',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from memoryAllPods',
+      },
+    });
   }
 };
 
+// Get cluster network utilization - Transmit
 queryController.clusterNetRec = async (req, res, next) => {
   let start = new Date();
   let end = new Date(start.getTime());
@@ -77,7 +91,6 @@ queryController.clusterNetRec = async (req, res, next) => {
   let startDateTime = end.toISOString();
   const memoryCache = {};
   const query = `${queryURL}query_range?query=sum(irate(container_network_receive_bytes_total[10m])) by (namespace)&start=${startDateTime}&end=${endDateTime}&step=30m`;
-  console.log(query);
   try {
     const response = await fetch(query);
     data = await response.json();
@@ -87,13 +100,19 @@ queryController.clusterNetRec = async (req, res, next) => {
       }
     });
     res.locals.clusterNetRec = memoryCache;
-    //res.locals.clusterNetTrans = data;
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from clusterNetRec in queryController',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from clusterNetRec',
+      },
+    });
   }
 };
 
+// Get cluster network utilization - Receive
 queryController.clusterNetTrans = async (req, res, next) => {
   let start = new Date();
   let end = new Date(start.getTime());
@@ -102,7 +121,6 @@ queryController.clusterNetTrans = async (req, res, next) => {
   let startDateTime = end.toISOString();
   const memoryCache = {};
   const query = `${queryURL}query_range?query=sum(irate(container_network_transmit_bytes_total[10m])) by (namespace)&start=${startDateTime}&end=${endDateTime}&step=30m`;
-  console.log(query);
   try {
     const response = await fetch(query);
     data = await response.json();
@@ -112,10 +130,15 @@ queryController.clusterNetTrans = async (req, res, next) => {
       }
     });
     res.locals.clusterNetTrans = memoryCache;
-    //res.locals.clusterNetTrans = data;
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from clusterNetTrans in queryController',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from clusterNetTrans',
+      },
+    });
   }
 };
 
