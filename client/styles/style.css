@@ -1,4 +1,16 @@
-.gaugeChartClass {
+/* .gaugeChartClass {
   margin: "-200px 0 -10px 0";
+  background-color: blue;
+}  */
+
+.App {
+  background-color: black;
+}
+
+.AppGlass {
+  display: grid;
+  height: 97%;
+  width: 97%;
+  border-radius: 2rem;
   background-color: blue;
 }

@@ -75,7 +75,9 @@ export default function HomeContainer() {
 
   return (
     <>
-      <List sx={{ display: 'flex' }}>
+   
+      <List sx={{ 
+        display: 'flex'}}>
         <ListItem>
           <Node nodeNumber={nodeNumber} key={1} />
           <Pods podNumber={podNumber} key={2} />
@@ -114,7 +116,7 @@ export default function HomeContainer() {
         </Grid>
       </Grid>
 
-      <h1> This is details container</h1>
+      <h1> This is home container</h1>
     </>
   );
 }
