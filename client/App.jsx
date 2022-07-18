@@ -2,16 +2,32 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DetailsContainer from './containers/DetailsContainer';
 import MiniDrawer from './containers/MiniDrawer';
-import { Container } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import NotisContainer from './containers/NotisContainer';
 import QueryContainer from './containers/QueryContainer';
 import HomeContainer from './containers/HomeContainer';
+import '../client/styles/style.css'
+
 
 
 
 function App() {
   return (
     <>
+  {/*
+    <div className='App'>
+      <div className='AppGlass'>
+
+    
+
+   
+     <Container maxWidth="sm" id="mainContainer" sx= {{
+        background:"whitesmoke",
+        borderRadius: "16px",
+        display: "flex",
+        flexDirection: "column",
+    }}>*/}
+       
       <BrowserRouter >
           <MiniDrawer>
               <Routes>
@@ -22,6 +38,10 @@ function App() {
               </Routes>
           </MiniDrawer>
       </BrowserRouter>
+      {/*
+    </Container>
+    </div>
+    </div> */} 
     </>
   );
 }
