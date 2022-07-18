@@ -213,4 +213,13 @@ k8sRouter.get('/memoryAllPods', queryController.memoryAllPods, (req, res) => {
   return res.status(200).json(res.locals.memoryAllPods);
 });
 
+// Cluster Network Util Transmitted 
+k8sRouter.get('/clusterNetRec', queryController.clusterNetRec, (req, res) => {
+  return res.status(200).json(res.locals.clusterNetRec);
+});
+
+// Cluster Network Util Transmitted 
+k8sRouter.get('/clusterNetTrans', queryController.clusterNetTrans, (req, res) => {
+  return res.status(200).json(res.locals.clusterNetTrans);
+});
 module.exports = k8sRouter;

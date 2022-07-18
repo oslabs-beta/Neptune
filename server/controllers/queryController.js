@@ -1,5 +1,7 @@
 // const { data } = require('../../client/components/PieChart');
 
+const { query } = require('express');
+
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const queryURL = 'http://127.0.0.1:9090/api/v1/';
@@ -66,5 +68,59 @@ queryController.memoryAllPods = async (req, res, next) => {
     return next(err);
   }
 };
+
+
+
+queryController.clusterNetRec = async (req, res, next) => {
+  let start = new Date();
+  let end = new Date(start.getTime());
+  end.setHours(end.getHours() - 24);
+  let endDateTime = start.toISOString();
+  let startDateTime = end.toISOString();
+  const memoryCache = {};
+  const query = `${queryURL}query_range?query=sum(irate(container_network_receive_bytes_total[10m])) by (namespace)&start=2022-07-17T10:49:29.303Z&end=2022-07-18T10:49:29.303Z&step=30m`;
+  console.log(query);
+  try {
+    const response = await fetch(query);
+    data = await response.json();
+    data.data.result.forEach((element) => {
+      if (!memoryCache[element.metric.pod]) {
+        memoryCache[element.metric.pod] = element.values;
+      }
+    });
+    res.locals.clusterNetRec = memoryCache;
+    //res.locals.clusterNetTrans = data;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+queryController.clusterNetTrans = async (req, res, next) => {
+  let start = new Date();
+  let end = new Date(start.getTime());
+  end.setHours(end.getHours() - 24);
+  let endDateTime = start.toISOString();
+  let startDateTime = end.toISOString();
+  const memoryCache = {};
+  const query = `${queryURL}query_range?query=sum(irate(container_network_transmit_bytes_total[10m])) by (namespace)&start=2022-07-17T10:49:29.303Z&end=2022-07-18T10:49:29.303Z&step=30m`;
+  console.log(query);
+  try {
+    const response = await fetch(query);
+    data = await response.json();
+    data.data.result.forEach((element) => {
+      if (!memoryCache[element.metric.pod]) {
+        memoryCache[element.metric.pod] = element.values;
+      }
+    });
+    res.locals.clusterNetTrans = memoryCache;
+    //res.locals.clusterNetTrans = data;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+};
+
+
 
 module.exports = queryController;
