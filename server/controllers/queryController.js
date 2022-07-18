@@ -69,8 +69,6 @@ queryController.memoryAllPods = async (req, res, next) => {
   }
 };
 
-
-
 queryController.clusterNetRec = async (req, res, next) => {
   let start = new Date();
   let end = new Date(start.getTime());
@@ -78,7 +76,7 @@ queryController.clusterNetRec = async (req, res, next) => {
   let endDateTime = start.toISOString();
   let startDateTime = end.toISOString();
   const memoryCache = {};
-  const query = `${queryURL}query_range?query=sum(irate(container_network_receive_bytes_total[10m])) by (namespace)&start=2022-07-17T10:49:29.303Z&end=2022-07-18T10:49:29.303Z&step=30m`;
+  const query = `${queryURL}query_range?query=sum(irate(container_network_receive_bytes_total[10m])) by (namespace)&start=${startDateTime}&end=${endDateTime}&step=30m`;
   console.log(query);
   try {
     const response = await fetch(query);
@@ -103,7 +101,7 @@ queryController.clusterNetTrans = async (req, res, next) => {
   let endDateTime = start.toISOString();
   let startDateTime = end.toISOString();
   const memoryCache = {};
-  const query = `${queryURL}query_range?query=sum(irate(container_network_transmit_bytes_total[10m])) by (namespace)&start=2022-07-17T10:49:29.303Z&end=2022-07-18T10:49:29.303Z&step=30m`;
+  const query = `${queryURL}query_range?query=sum(irate(container_network_transmit_bytes_total[10m])) by (namespace)&start=${startDateTime}&end=${endDateTime}&step=30m`;
   console.log(query);
   try {
     const response = await fetch(query);
@@ -120,7 +118,5 @@ queryController.clusterNetTrans = async (req, res, next) => {
     return next(err);
   }
 };
-
-
 
 module.exports = queryController;
