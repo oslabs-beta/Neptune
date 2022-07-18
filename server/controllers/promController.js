@@ -68,15 +68,13 @@ promController.promClusterCpuPct = async (req, res, next) => {
     );
     data = await response.json();
     data = Number(data.data.result[0].value[1]) * 100;
-    res.locals.promClusterCpuPct = data
-    console.log('ICE CREAM', res.locals.promClusterCpuPct)
+    res.locals.promClusterCpuPct = data;
+    console.log('ICE CREAM', res.locals.promClusterCpuPct);
     return next();
   } catch (err) {
     return next(err);
   }
 };
-
-
 
 // CLUSTER - TOTAL MEMORY
 promController.promClusterMemoryTotal = async (req, res, next) => {
@@ -85,7 +83,7 @@ promController.promClusterMemoryTotal = async (req, res, next) => {
       `${queryURL}query?query=sum(container_memory_working_set_bytes)`
     );
     data = await response.json();
-    res.locals.promClusterMemoryTotal = data.data.result[0].value[1]
+    res.locals.promClusterMemoryTotal = data.data.result[0].value[1];
     console.log('MEMORY TOTAL', res.locals.promClusterMemoryTotal);
     return next();
   } catch (err) {
@@ -101,8 +99,8 @@ promController.promClusterMemoryUtil = async (req, res, next) => {
       `${queryURL}query?query=node_memory_Active_bytes/node_memory_MemTotal_bytes`
     );
     data = await response.json();
-    data = (data.data.result[0].value[1]) * 100
-    res.locals.promClusterMemoryUtil = data.toFixed(2)
+    data = data.data.result[0].value[1] * 100;
+    res.locals.promClusterMemoryUtil = data.toFixed(2);
     console.log('MEMORY USAGE', res.locals.promClusterMemoryUtil);
     return next();
   } catch (err) {
@@ -124,7 +122,6 @@ promController.promClusterMemoryTotal = async (req, res, next) => {
     return next(err);
   }
 };
-
 
 /////////////////////////////////////////////////////////////////////////////----------------------------NODES--------------------------////////////
 /////////////////////////////////////////////////////////////////////////////
@@ -184,7 +181,7 @@ promController.promNodeNetUtil = async (req, res, next) => {
       `${queryURL}query?query=sum(rate(container_network_receive_bytes_total[5m]))`
     );
     res.locals.promNodeNetUtil = await response.json();
-    console.log(res.locals.promNodeNetUtil)
+    console.log(res.locals.promNodeNetUtil);
     // res.locals.promNodeNetUtil = Number(
     //   res.locals.promNodeNetUtil.data.result[0].value[1]
     // );
@@ -223,9 +220,7 @@ promController.promNodeNetErr = async (req, res, next) => {
 // ALERTS
 promController.promAlerts = async (req, res, next) => {
   try {
-    const response = await fetch(
-      `${queryURL}alerts`
-    );
+    const response = await fetch(`${queryURL}alerts`);
     data = await response.json();
     res.locals.promAlerts = data.data.alerts;
     return next();
@@ -233,7 +228,5 @@ promController.promAlerts = async (req, res, next) => {
     return next(err);
   }
 };
-
-
 
 module.exports = promController;
