@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -30,10 +30,12 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Pod network utilization',
+      text: 'Memory Usage of Each Namespace in MB',
     },
   },
 };
+
+// labels is x-values
 
 const labels = [
   '0.00 ms',
@@ -55,6 +57,8 @@ const labels = [
   '8500.00 ms',
   '9000.00 ms',
 ];
+
+  //dummyData are the y-values
 const dummyData = [
   14, 45, 32, 7, 2, 22, 5, 56, 6, 12, 23, 200, 60, 260, 70, 267, 220, 225,
 ];
@@ -69,7 +73,9 @@ const dummyData4 = [
 ];
 
 export const data = {
+  //labels is x-values
   labels,
+  // data: dummyData, are the y-values
   datasets: [
     {
       label: 'Network Utilization',
@@ -98,6 +104,52 @@ export const data = {
   ],
 };
 
-export default function LineChart(props) {
-  return <Line options={options} data={data} />;
+export default function LineChart({lineData}) {
+    console.log("lineData --> ", lineData);
+
+
+  // iterate thru the object, skip the undefined (first element)
+
+  //Access the array of each of the key
+  //each array will contain an array of y values
+  // x - time (30 min) -- labels /   and y - values  are data
+
+  // the will be in byte, divide by a million to make in mega bytes
+  
+
+  const data2 = {};
+  data2.labels = [];
+  let minCount = 0;
+  console.log("this console" ,lineData['default'])
+  for(let i = 0; i < lineData['default'].length; i++ ) //the count of x-values depend on the length of the array of each key
+  {
+    data2.labels.push(`${minCount = minCount + 30}min`);
+  }
+  // for each dataset we will have an obj
+  data2.datasets = [];
+  
+  for(let namespace in lineData)
+  { 
+    if(namespace !== 'undefined')
+    {
+      const namespaceMemory = {};
+      namespaceMemory.label = namespace;
+      namespaceMemory.data = [];
+      const outerArr = lineData[namespace] //outer array contains array of mem usage
+      outerArr.forEach( innerArr => {namespaceMemory.data.push(innerArr[0] / 1000000)}); //take the first value of each inner array 
+      //random colors from Details Container
+      const r = Math.floor(Math.random() * 255);
+      const g = Math.floor(Math.random() * 255);
+      const b = Math.floor(Math.random() * 255);
+      namespaceMemory.borderColor = `rgba(${r},${g},${b})`; 
+      namespaceMemory.backgroundColor = `rgba(${r},${g},${b}, 0.5)`;
+
+      data2.datasets.push(namespaceMemory);
+    }
+  }
+  
+ // console.log('lets get down', data2);
+//console.log('data 1', data);
+
+  return <Line options={options} data={data2} />;
 }

@@ -53,6 +53,40 @@ export const data = {
   ],
 };
 
-export default function VerticalLineChart() {
-  return <Bar options={options} data={data} />;
+export default function VerticalLineChart({allPodsData}) {
+
+  const data2 = {};
+  data2.labels = [];
+  let minCount = 0;
+  for(let i = 0; i < allPodsData['undefined'].length; i++ ) //the count of x-values depend on the length of the array of each key
+  {
+    data2.labels.push(`${minCount = minCount + 30}min`);
+  }
+  // for each dataset we will have an obj
+  data2.datasets = [];
+  
+  for(let podName in allPodsData)
+  { 
+    if(podName !== 'undefined')
+    {
+      const podNameMemory = {};
+      podNameMemory.label = podName;
+      podNameMemory.data = [];
+      const outerArr = allPodsData[podName] //outer array contains array of mem usage
+      outerArr.forEach( innerArr => {podNameMemory.data.push(innerArr[0] / 1000000)}); //take the first value of each inner array 
+      //random colors from Details Container
+      const r = Math.floor(Math.random() * 255);
+      const g = Math.floor(Math.random() * 255);
+      const b = Math.floor(Math.random() * 255);
+      podNameMemory.backgroundColor = `rgba(${r},${g},${b}, 0.5)`;
+
+      data2.datasets.push(podNameMemory);
+    }
+  }
+  
+  console.log('lets get down', data2);
+  console.log('data 1', data);
+
+
+  return <Bar options={options} data={data2} />;
 }
