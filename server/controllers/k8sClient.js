@@ -1,9 +1,3 @@
-// k8s DASHBOARD
-// import express from "express";
-// K8s API
-// convert controllers to promise chaining
-
-// DO NOT DELETE: http://127.0.0.1:9090/api/v1/labels
 const k8s = require('@kubernetes/client-node');
 
 //New instance of k8s, (Kube config are the files that connect )
@@ -74,7 +68,6 @@ k8sController.getAllNodes = async (req, res, next) => {
     nodeResult.response.body.items.forEach((element) => {
       nodeNames.push(element.metadata.name);
     });
-    console.log('HYUNDAI', nodeNames);
 
     res.locals.nodeList = nodeNames;
     // const nodeStatus = await k8sApiSvc.listComponentStatus();
@@ -83,7 +76,7 @@ k8sController.getAllNodes = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Error getting data from getAllNodes',
-      status: 404,
+      status: 500,
       message: {
         err: 'An error happened trying to get All Nodes',
       },
@@ -105,7 +98,7 @@ k8sController.getAllNamespaces = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Error getting data from getAllNamespaces',
-      status: 404,
+      status: 500,
       message: {
         err: 'An error happened trying to get the data from getAllNamespaces',
       },
@@ -122,7 +115,7 @@ k8sController.getDeployment = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Error getting data from getDeploymentList',
-      status: 404,
+      status: 500,
       message: {
         err: 'An error happened trying to get the data from getDeploymentList',
       },
@@ -139,7 +132,7 @@ k8sController.getService = async (req, res, next) => {
   } catch (err) {
     return next({
       log: 'Error getting data from getServiceList',
-      status: 404,
+      status: 500,
       message: {
         err: 'An error happened trying to get the data from getServiceList',
       },

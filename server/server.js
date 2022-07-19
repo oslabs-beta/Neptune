@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const k8sRouter = require('./routes/routes');
-//const promRouter = require('./routes/routes');
 
 const PORT = 3000;
 const app = express();
@@ -14,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.use('/api/k8s', k8sRouter);
-// app.use('/api/prom', promRouter);
 
 app.get('/api', (req, res) => {
   return res.status(200).json('HELLO from Neptune BackEnd');
@@ -27,7 +25,7 @@ app.get('/', (req, res) => {
 // Global route handler
 app.use('*', (req, res) => {
   console.log('Page not found.');
-  return res.status(404).send('Page not found.');
+  return res.status(404).send('404! Page not found.');
 });
 
 // Global error handler

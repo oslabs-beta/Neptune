@@ -1,13 +1,117 @@
 // kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 --namespace=default 9090:9090
-
 const { response } = require('express');
-
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
-
 const queryURL = 'http://127.0.0.1:9090/api/v1/';
-
 const promController = {};
+
+//----------CLUSTER----------//
+
+//CLUSTER - Total CPU Cores
+promController.promClusterCpuCore = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=count without(cpu, mode) (node_cpu_seconds_total{mode="idle"})`
+    );
+    res.locals.promClusterCpuCore = await response.json();
+    res.locals.promClusterCpuCore = parseInt(
+      res.locals.promClusterCpuCore.data.result[0].value[1]
+    );
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error getting data from promClusterCpuCore',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promClusterCpuCore',
+      },
+    });
+  }
+};
+
+// CLUSTER - CPU USAGE
+promController.promClusterCpuPct = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=1 - sum(avg by (mode) (rate(node_cpu_seconds_total{job="node-exporter", mode=~"idle|iowait|steal"}[10m])))`
+    );
+    data = await response.json();
+    data = Number(data.data.result[0].value[1]) * 100;
+    res.locals.promClusterCpuPct = data;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error getting data from promClusterCpuPct',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promClusterCpuPct',
+      },
+    });
+  }
+};
+
+// CLUSTER - TOTAL MEMORY
+promController.promClusterMemoryTotal = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=sum(container_memory_working_set_bytes)`
+    );
+    data = await response.json();
+    res.locals.promClusterMemoryTotal = data.data.result[0].value[1];
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error getting data from promClusterMemoryTotal',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promClusterMemoryTotal',
+      },
+    });
+  }
+};
+
+// CLUSTER - MEMORY UTILIZATION
+promController.promClusterMemoryUtil = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=node_memory_Active_bytes/node_memory_MemTotal_bytes`
+    );
+    data = await response.json();
+    data = data.data.result[0].value[1] * 100;
+    res.locals.promClusterMemoryUtil = data.toFixed(2);
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error getting data from promClusterMemoryUtil',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promClusterMemoryUtil',
+      },
+    });
+  }
+};
+
+// CLUSTER - TOTAL MEMORY
+promController.promClusterMemoryTotal = async (req, res, next) => {
+  try {
+    const response = await fetch(
+      `${queryURL}query?query=sum(container_memory_working_set_bytes)`
+    );
+    data = await response.json();
+    res.locals.promClusterMemoryTotal = data.data.result[0].value[1];
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error getting data from promClusterMemoryTotal',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promClusterMemoryTotal',
+      },
+    });
+  }
+};
+
+//----------NAMESPACES----------//
 
 // GETTING ALL THE NAMESPACES IN AN ARRAY
 promController.promNamespaces = async (req, res, next) => {
@@ -23,108 +127,17 @@ promController.promNamespaces = async (req, res, next) => {
     res.locals.promNamespaces = namespaces;
     return next();
   } catch (err) {
-    return next(err);
-  }
-};
-
-promController.isUp = (req, res, next) => {
-  const queryStr = `${queryURL}query?query=up`;
-  fetch(queryStr)
-    .then((response) => response.json())
-    .then((data) => {
-      res.locals.query = data;
-      console.log(data);
-      return next();
-    })
-    .catch((err) => {
-      return next(err);
+    return next({
+      log: 'Error getting data from promNamespaces',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promNamespaces',
+      },
     });
-};
-
-/////////////////////////////////////////////////////////////////////////////----------------------------CLUSTERS--------------------------////////////
-/////////////////////////////////////////////////////////////////////////////
-
-//CLUSTER - Total CPU Cores
-promController.promClusterCpuCore = async (req, res, next) => {
-  try {
-    const response = await fetch(
-      `${queryURL}query?query=count without(cpu, mode) (node_cpu_seconds_total{mode="idle"})`
-    );
-    res.locals.promClusterCpuCore = await response.json();
-    res.locals.promClusterCpuCore = parseInt(
-      res.locals.promClusterCpuCore.data.result[0].value[1]
-    );
-    return next();
-  } catch (err) {
-    return next(err);
   }
 };
 
-// CLUSTER - CPU USAGE
-promController.promClusterCpuPct = async (req, res, next) => {
-  try {
-    const response = await fetch(
-      `${queryURL}query?query=1 - sum(avg by (mode) (rate(node_cpu_seconds_total{job="node-exporter", mode=~"idle|iowait|steal"}[10m])))`
-    );
-    data = await response.json();
-    data = Number(data.data.result[0].value[1]) * 100;
-    res.locals.promClusterCpuPct = data;
-    console.log('ICE CREAM', res.locals.promClusterCpuPct);
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-};
-
-// CLUSTER - TOTAL MEMORY
-promController.promClusterMemoryTotal = async (req, res, next) => {
-  try {
-    const response = await fetch(
-      `${queryURL}query?query=sum(container_memory_working_set_bytes)`
-    );
-    data = await response.json();
-    res.locals.promClusterMemoryTotal = data.data.result[0].value[1];
-    console.log('MEMORY TOTAL', res.locals.promClusterMemoryTotal);
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-};
-
-// CLUSTER - MEMORY UTILIZATION
-
-promController.promClusterMemoryUtil = async (req, res, next) => {
-  try {
-    const response = await fetch(
-      `${queryURL}query?query=node_memory_Active_bytes/node_memory_MemTotal_bytes`
-    );
-    data = await response.json();
-    data = data.data.result[0].value[1] * 100;
-    res.locals.promClusterMemoryUtil = data.toFixed(2);
-    console.log('MEMORY USAGE', res.locals.promClusterMemoryUtil);
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-};
-
-// CLUSTER - TOTAL MEMORY
-
-promController.promClusterMemoryTotal = async (req, res, next) => {
-  try {
-    const response = await fetch(
-      `${queryURL}query?query=sum(container_memory_working_set_bytes)`
-    );
-    data = await response.json();
-    res.locals.promClusterMemoryTotal = data.data.result[0].value[1];
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-};
-
-/////////////////////////////////////////////////////////////////////////////----------------------------NODES--------------------------////////////
-/////////////////////////////////////////////////////////////////////////////
+//----------NODES----------//
 
 // NODE - CPU usage
 promController.promNodeCpu = async (req, res, next) => {
@@ -136,27 +149,15 @@ promController.promNodeCpu = async (req, res, next) => {
     res.locals.promNodeCpu = res.locals.promNodeCpu.data;
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from promNodeCpu',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promNodeCpu',
+      },
+    });
   }
 };
-
-// NODE - Memory usage
-promController.promNodeMemory = async (req, res, next) => {
-  try {
-    const response = await fetch(
-      `${queryURL}query?query=(1-sum(kube_node_status_allocatable{resource="memory",unit="byte",node="minikube"})/sum(kube_node_status_capacity{resource="memory",unit="byte",node="minikube"}))*100`
-    );
-    res.locals.promNodeMemory = await response.json();
-    res.locals.promNodeMemory = parseInt(
-      res.locals.promNodeMemory.data.result[0].value[1]
-    );
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-};
-
-// NODE - Return all pods from a node
 
 // NODE - Return pod capacity of node as a number
 promController.promNodePodCap = async (req, res, next) => {
@@ -170,7 +171,13 @@ promController.promNodePodCap = async (req, res, next) => {
     );
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from promNodePodCap',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promNodePodCap',
+      },
+    });
   }
 };
 
@@ -180,16 +187,21 @@ promController.promNodeNetUtil = async (req, res, next) => {
     const response = await fetch(
       `${queryURL}query?query=sum(rate(container_network_receive_bytes_total[5m]))`
     );
-    res.locals.promNodeNetUtil = await response.json();
-    console.log(res.locals.promNodeNetUtil);
-    // res.locals.promNodeNetUtil = Number(
-    //   res.locals.promNodeNetUtil.data.result[0].value[1]
-    // );
+    data = await response.json();
+    res.locals.promNodeNetUtil = data;
+    res.locals.promNodeNetUtil = Number(data.data.result[0].value[1]);
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from promNodeNetUtil',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promNodeNetUtil',
+      },
+    });
   }
 };
+
 // NODE - Return network errors
 promController.promNodeNetErr = async (req, res, next) => {
   try {
@@ -213,9 +225,17 @@ promController.promNodeNetErr = async (req, res, next) => {
 
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from promNodeNetErr',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promNodeNetErr',
+      },
+    });
   }
 };
+
+//----------ALERTS----------//
 
 // ALERTS
 promController.promAlerts = async (req, res, next) => {
@@ -225,7 +245,13 @@ promController.promAlerts = async (req, res, next) => {
     res.locals.promAlerts = data.data.alerts;
     return next();
   } catch (err) {
-    return next(err);
+    return next({
+      log: 'Error getting data from promAlerts',
+      status: 500,
+      message: {
+        err: 'An error happened trying to get the data from promAlerts',
+      },
+    });
   }
 };
 
