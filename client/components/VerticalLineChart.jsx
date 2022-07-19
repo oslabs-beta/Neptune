@@ -73,7 +73,7 @@ export default function VerticalLineChart({allPodsData}) {
       podNameMemory.label = podName;
       podNameMemory.data = [];
       const outerArr = allPodsData[podName] //outer array contains array of mem usage
-      outerArr.forEach( innerArr => {podNameMemory.data.push(innerArr[0] / 1000000)}); //take the first value of each inner array 
+      outerArr.forEach( innerArr => {podNameMemory.data.push(innerArr[0] % 10000)}); //take the first value of each inner array 
       //random colors from Details Container
       const r = Math.floor(Math.random() * 255);
       const g = Math.floor(Math.random() * 255);
