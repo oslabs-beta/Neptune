@@ -19,7 +19,11 @@ export default function HomeContainer() {
   const [deplNumber, setDeplNumber] = useState([]);
   const [serviceNumber, setServiceNumber] = useState([]);
   const [namespaceNumber, setNamespaceNumber] = useState([]);
-  const [lineData, setLineData] = useState([]);
+  const [lineData, setLineData] = useState({});
+  const [allPodsData, setAllPodsData] = useState({});
+
+
+
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////// --- FETCH REQ FROM KUBERNETES DASHBOARD ------//////////////////////////////////////////////
@@ -27,7 +31,8 @@ export default function HomeContainer() {
 
   // useEffect counts the state
   useEffect(() => {
-    // return pod count
+//CHANGED THE ALLNAMESPACES TO THE BEGGINING 
+    //return pod count
     fetch('http://localhost:8080/api/k8s/podCount')
       .then((response) => response.json())
       .then((data) => {
@@ -67,13 +72,26 @@ export default function HomeContainer() {
         console.log('NAMESPACEX COUNT', data.length);
       });
 
-    // fetch req for line graph data (memory used for all namespaces)
+    //fetch req for line graph data (memory used for all namespaces)
     fetch('http://localhost:8080/api/k8s/memoryAllNamespaces')
       .then((response) => response.json())
       .then((data) => {
         setLineData(data);
       });
-  }, []);
+
+    
+    //fetch req for vertical line graph data (memory used for all pods)
+    fetch('http://localhost:8080/api/k8s/memoryAllPods')
+      .then((response) => response.json())
+      .then((data) => {
+        setAllPodsData(data);
+      });
+
+      // To check if UseState is rendening multiple times 
+     console.log("I fire once?")
+  },[]);
+
+  
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////// --- FETCH REQ FROM PROMETHEUS ------//////////////////////////////////////////////
@@ -100,11 +118,12 @@ export default function HomeContainer() {
       <Grid container spacing={4}>
         <Grid item xs={6}>
           {' '}
-          <LineChart lineData={lineData} key={1} />{' '}
+        
+          { lineData.default && <LineChart lineData={lineData} key={1} /> }
         </Grid>
         <Grid item xs={6}>
           {' '}
-          <VerticalLineChart />{' '}
+          { allPodsData.undefined && <VerticalLineChart allPodsData={allPodsData} key={1} /> }
         </Grid>
       </Grid>
       <br />
