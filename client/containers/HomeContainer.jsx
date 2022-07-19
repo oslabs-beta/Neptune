@@ -21,6 +21,8 @@ export default function HomeContainer() {
   const [namespaceNumber, setNamespaceNumber] = useState([]);
   const [lineData, setLineData] = useState({});
   const [allPodsData, setAllPodsData] = useState({});
+  const [networkReceived, setNetworkReceived] = useState({});
+  const [networkTransmitted, setNetworkTransmitted] = useState({});
 
 
 
@@ -31,8 +33,9 @@ export default function HomeContainer() {
 
   // useEffect counts the state
   useEffect(() => {
-//CHANGED THE ALLNAMESPACES TO THE BEGGINING 
+    //CHANGED THE ALLNAMESPACES TO THE BEGGINING 
     //return pod count
+
     fetch('http://localhost:8080/api/k8s/podCount')
       .then((response) => response.json())
       .then((data) => {
@@ -79,6 +82,7 @@ export default function HomeContainer() {
         setLineData(data);
       });
 
+
     
     //fetch req for vertical line graph data (memory used for all pods)
     fetch('http://localhost:8080/api/k8s/memoryAllPods')
@@ -87,8 +91,27 @@ export default function HomeContainer() {
         setAllPodsData(data);
       });
 
+    //http://localhost:8080/api/k8s/clusterNetRec
+    //fetch req for area chart (Network Received)
+    fetch('http://localhost:8080/api/k8s/clusterNetRec')
+    .then((response) => response.json())
+    .then((data) => {
+      setNetworkReceived(data);
+      console.log('network received inside homecontainer', networkReceived);
+    });
+
+
+    //http://localhost:8080/api/k8s/clusterNetTrans
+    //fetch req for area chart (Network Transmitted)
+    fetch('http://localhost:8080/api/k8s/clusterNetTrans')
+    .then((response) => response.json())
+    .then((data) => {
+      setNetworkTransmitted(data);
+    });
+
+
+      console.log("I fire once?")
       // To check if UseState is rendening multiple times 
-     console.log("I fire once?")
   },[]);
 
   
@@ -111,19 +134,15 @@ export default function HomeContainer() {
         </ListItem>
       </List>
 
-      <h1> This is cluster section</h1>
-
-      <h2>below is node section</h2>
-
       <Grid container spacing={4}>
         <Grid item xs={6}>
           {' '}
         
-          { lineData.default && <LineChart lineData={lineData} key={1} /> }
+          { lineData.default && <LineChart lineData={lineData} key={6} /> }
         </Grid>
         <Grid item xs={6}>
           {' '}
-          { allPodsData.undefined && <VerticalLineChart allPodsData={allPodsData} key={1} /> }
+          { allPodsData.undefined && <VerticalLineChart allPodsData={allPodsData} key={7} /> }
         </Grid>
       </Grid>
       <br />
@@ -133,15 +152,16 @@ export default function HomeContainer() {
       <Grid container spacing={4}>
         <Grid item xs={6}>
           {' '}
-          <PolarAreaChart />{' '}
+          { networkTransmitted.undefined && <AreaChart  networkData={networkTransmitted} networkType={'Cluster Network Transmitted'} key={8}/> }
         </Grid>
         <Grid item xs={6}>
           {' '}
-          <AreaChart />{' '}
+          { networkReceived.undefined && <AreaChart  networkData={networkReceived} networkType={'Cluster Network Received'} key={9}/> }
         </Grid>
       </Grid>
 
-      <h1> This is home container</h1>
+
+      
     </>
   );
 }
