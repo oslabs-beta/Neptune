@@ -6,7 +6,7 @@ import { Container, Grid } from '@mui/material';
 import NotisContainer from './containers/NotisContainer';
 import QueryContainer from './containers/QueryContainer';
 import HomeContainer from './containers/HomeContainer';
-import '../client/styles/style.css'
+import '../client/styles/style.css';
 
 
 
@@ -34,7 +34,6 @@ function App() {
                 <Route path='/' element={<HomeContainer />} />
                 <Route path='/details' element={<DetailsContainer />} />
                 <Route path='/notis' element={<NotisContainer />} />
-                <Route path='/query' element={<QueryContainer />} />
               </Routes>
           </MiniDrawer>
       </BrowserRouter>
