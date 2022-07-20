@@ -33,7 +33,7 @@ function App() {
               <Routes>
                 <Route path='/' element={<HomeContainer />} />
                 <Route path='/details' element={<DetailsContainer />} />
-                <Route path='/notis' element={<NotisContainer />} />
+                <Route path='/alerts' element={<NotisContainer />} />
               </Routes>
           </MiniDrawer>
       </BrowserRouter>

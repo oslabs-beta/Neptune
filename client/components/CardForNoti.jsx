@@ -18,7 +18,7 @@ export default function CardForNoti({alertname, description, namespace, service,
             Alert Name: {alertname}
           </Typography>
           <Typography variant="h5" component="div">
-            Descrition: {description}
+            Description: {description}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
             Namespace: {namespace}

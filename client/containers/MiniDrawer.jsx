@@ -142,7 +142,7 @@ export default function MiniDrawer({ children }) {
           {[
             { text: 'Home', path: '/', icon: 'house' },
             { text: 'Details', path: '/details', icon: 'speed' },
-            { text: 'Notifications', path: '/notis', icon: 'notifications' },
+            { text: 'Notifications', path: '/alerts', icon: 'notifications' },
           ].map((menu, index) => (
             <Link style={{ textDecoration: 'none' }} to={menu.path}>
               <ListItem key={menu.text} disablePadding sx={{ display: 'block' }}>

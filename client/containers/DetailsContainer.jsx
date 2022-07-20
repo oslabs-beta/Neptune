@@ -76,14 +76,14 @@ export default function DetailsContainer() {
 
       //console.log(podsInfo);
       //---- FETCH REQ FOR THE 1ST SPEEDOMETER ---- CPU USAGE OF THE CLUSTER 
-      fetch('http://localhost:8080/api/k8s/promClusterCpuPct')
+      fetch('/api/k8s/promClusterCpuPct')
       .then((response) => response.json())
       .then((data) => {
         setCpu(data);
       });
 
       //---- FETCH REQ FOR THE 2ND SPEEDOMETER ---- CPU MEMORY OF THE CLUSTER 
-       fetch('http://localhost:8080/api/k8s/promClusterMemoryUtil')
+       fetch('/api/k8s/promClusterMemoryUtil')
        .then((response) => response.json())
        .then((data) => {
          setMem(data);

@@ -36,7 +36,7 @@ export default function HomeContainer() {
     //CHANGED THE ALLNAMESPACES TO THE BEGGINING 
     //return pod count
 
-    fetch('http://localhost:8080/api/k8s/podCount')
+    fetch('/api/k8s/podCount')
       .then((response) => response.json())
       .then((data) => {
         setPodNumber(data.length);
@@ -44,7 +44,7 @@ export default function HomeContainer() {
       });
 
     // return node count
-    fetch('http://localhost:8080/api/k8s/node')
+    fetch('/api/k8s/node')
       .then((response) => response.json())
       .then((data) => {
         setNodeNumber(data.length);
@@ -52,7 +52,7 @@ export default function HomeContainer() {
       });
 
     // return deployment count
-    fetch('http://localhost:8080/api/k8s/deployment')
+    fetch('/api/k8s/deployment')
       .then((response) => response.json())
       .then((data) => {
         setDeplNumber(data.length);
@@ -60,7 +60,7 @@ export default function HomeContainer() {
       });
 
     // return services count
-    fetch('http://localhost:8080/api/k8s/services')
+    fetch('/api/k8s/services')
       .then((response) => response.json())
       .then((data) => {
         setServiceNumber(data.length);
@@ -68,7 +68,7 @@ export default function HomeContainer() {
       });
 
     // fetch req for namespaces
-    fetch('http://localhost:8080/api/k8s/namespace')
+    fetch('/api/k8s/namespace')
       .then((response) => response.json())
       .then((data) => {
         setNamespaceNumber(data.length);
@@ -76,7 +76,7 @@ export default function HomeContainer() {
       });
 
     //fetch req for line graph data (memory used for all namespaces)
-    fetch('http://localhost:8080/api/k8s/memoryAllNamespaces')
+    fetch('/api/k8s/memoryAllNamespaces')
       .then((response) => response.json())
       .then((data) => {
         setLineData(data);
@@ -85,15 +85,15 @@ export default function HomeContainer() {
 
     
     //fetch req for vertical line graph data (memory used for all pods)
-    fetch('http://localhost:8080/api/k8s/memoryAllPods')
+    fetch('/api/k8s/memoryAllPods')
       .then((response) => response.json())
       .then((data) => {
         setAllPodsData(data);
       });
 
-    //http://localhost:8080/api/k8s/clusterNetRec
+    ///api/k8s/clusterNetRec
     //fetch req for area chart (Network Received)
-    fetch('http://localhost:8080/api/k8s/clusterNetRec')
+    fetch('/api/k8s/clusterNetRec')
     .then((response) => response.json())
     .then((data) => {
       setNetworkReceived(data);
@@ -101,17 +101,13 @@ export default function HomeContainer() {
     });
 
 
-    //http://localhost:8080/api/k8s/clusterNetTrans
+    ///api/k8s/clusterNetTrans
     //fetch req for area chart (Network Transmitted)
-    fetch('http://localhost:8080/api/k8s/clusterNetTrans')
+    fetch('/api/k8s/clusterNetTrans')
     .then((response) => response.json())
     .then((data) => {
       setNetworkTransmitted(data);
     });
-
-
-      console.log("I fire once?")
-      // To check if UseState is rendening multiple times 
   },[]);
 
   
