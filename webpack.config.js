@@ -46,7 +46,9 @@ const config = {
       {
         test: /\.css$/i,
         exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        // check the webpack 
+        // Dockerize diff container 
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,

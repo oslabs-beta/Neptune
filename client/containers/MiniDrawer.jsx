@@ -116,7 +116,7 @@ export default function MiniDrawer({ children }) {
               ...(open && { display: 'none' }),
             }}
           >
-            <img src = {neptune2} width="60"/>
+            <img src = {neptune2} width="45"/>
           </IconButton>
           <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
             <Typography variant="h6" noWrap component="div" sx={{ display: 'flex', alignItems:'center' }}>
@@ -143,7 +143,6 @@ export default function MiniDrawer({ children }) {
             { text: 'Home', path: '/', icon: 'house' },
             { text: 'Details', path: '/details', icon: 'speed' },
             { text: 'Notifications', path: '/notis', icon: 'notifications' },
-            { text: 'Query', path: '/query', icon: 'add_circle_outline' },
           ].map((menu, index) => (
             <Link style={{ textDecoration: 'none' }} to={menu.path}>
               <ListItem key={menu.text} disablePadding sx={{ display: 'block' }}>

@@ -20,8 +20,6 @@
 }
 
 
-
-
 /*
 
 .AppGlass {
@@ -31,3 +29,32 @@
   border-radius: 2rem;
   background-color: blue;
 } */
+
+
+/* This is the header with the logo */
+/* top nav bar */
+.css-1nt9mjz-MuiToolbar-root{
+  background-color:#073072;
+  min-height: 80px;
+  
+}
+
+
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
+  background-color: #f2f7ff;
+  width: 5%;
+  border-radius: 16px;
+}
+
+/* Icon box  */
+.css-h4y409-MuiList-root{
+  /* padding-top: 700%; */
+  /* vertical-align: middle; */
+}
+
+
+.css-p55zm9-MuiButtonBase-root-MuiIconButton-root {
+  margin-left:-18px
+}
+
+  

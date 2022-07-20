@@ -126,7 +126,11 @@ export default function HomeContainer() {
       <List sx={{ 
         display: 'flex',
         }}>
-        <ListItem>
+        <ListItem
+         sx={{
+          placeContent: "center",
+          marginBottom:"2%",
+          }}>
           <Node nodeNumber={nodeNumber} key={1} />
           <Pods podNumber={podNumber} key={2} />
           <Depl deplNumber={deplNumber} key={3} />
