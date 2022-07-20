@@ -14,8 +14,8 @@ import '../client/styles/style.css'
 function App() {
   return (
     <>
-  {/*
-    <div className='App'>
+  <div className='App'>
+  {/* 
       <div className='AppGlass'>
 
     
@@ -29,7 +29,7 @@ function App() {
     }}>*/}
        
       <BrowserRouter >
-          <MiniDrawer>
+          <MiniDrawer id = "logoBar">
               <Routes>
                 <Route path='/' element={<HomeContainer />} />
                 <Route path='/details' element={<DetailsContainer />} />
@@ -41,7 +41,8 @@ function App() {
       {/*
     </Container>
     </div>
-    </div> */} 
+     */} 
+  </div>
     </>
   );
 }

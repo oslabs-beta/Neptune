@@ -153,8 +153,9 @@ export default function DetailsContainer() {
         </Grid>
         <Grid item xs={6}>
         <GaugeChartTemplate
+            id = "speedometer"
             chartData={+(Math.round(mem + "e+2")  + "e-2")}
-            title='Cluster Memory Usage'
+            title='Cluster Memory Usage' 
             label='Cluster Memory Usage'
           />
         </Grid>

@@ -124,7 +124,8 @@ export default function HomeContainer() {
     <>
    
       <List sx={{ 
-        display: 'flex'}}>
+        display: 'flex',
+        }}>
         <ListItem>
           <Node nodeNumber={nodeNumber} key={1} />
           <Pods podNumber={podNumber} key={2} />
