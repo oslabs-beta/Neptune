@@ -38,9 +38,8 @@ export default function NotisContainer (){
 
   return (
   <>
-   <h1> This is Notis container</h1>
    <Grid container spacing={2}>
-      <Grid item xs={9}>
+      <Grid item xs={10}>
         <Searcher/>
       </Grid>
       <Grid item xs={2}>
@@ -68,7 +67,7 @@ export default function NotisContainer (){
    <Grid container spacing={1}>
         {notis.map((noti) => (
 
-            <Grid item direction= 'row' xs={10}>
+            <Grid item direction= 'row' xs={12}>
               <CardForNoti
                 alertname={noti.labels.alertname}
                 description={noti.annotations.description}

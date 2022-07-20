@@ -21,8 +21,7 @@ const Searcher = (props) => {
     <Stack 
       direction= 'row'
       sx={{
-        marginTop: '30px',
-        width: '80%'
+        width: '110%'
       }}
 
     >
@@ -31,7 +30,7 @@ const Searcher = (props) => {
         label="search"
         placeholder="search"
         variant="outlined"
-        size="small"
+        size="medium"
         value={valueInput}
         onChange={onSearchValueChange}
         sx={{

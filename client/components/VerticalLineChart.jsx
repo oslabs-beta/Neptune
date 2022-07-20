@@ -27,7 +27,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Pod Capacity',
+      text: 'Pod Memory and Performance',
     },
   },
 };

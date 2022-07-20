@@ -1,11 +1,28 @@
-/* .gaugeChartClass {
-  margin: "-200px 0 -10px 0";
-  background-color: blue;
-}  */
+.gaugeChartClass {
+  margin-top: -150px;
+} 
 
-.App {
+/*
+ .App {
   background-color: black;
 }
+*/
+
+.css-1pnmrwp-MuiTypography-root{
+  font-weight:700px;
+  font-size:2rem;
+  text-align: center;
+}
+
+
+.css-pwngrv-MuiPaper-root-MuiCard-root{
+  background-color:#ffffff;
+}
+
+
+
+
+/*
 
 .AppGlass {
   display: grid;
@@ -13,4 +30,4 @@
   width: 97%;
   border-radius: 2rem;
   background-color: blue;
-}
+} */
