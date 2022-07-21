@@ -67,14 +67,13 @@ kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 --namesp
 <p>
 <img src="https://github.com/devicons/devicon/blob/master/icons/kubernetes/kubernetes-plain-wordmark.svg" title="Kubernetes" alt="Kubernetes" width="50" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" title="React" alt="React" width="40" height="40"/>&nbsp;
-<img src="https://github.com/devicons/devicon/blob/master/icons/kubernetes/kubernetes-plain-wordmark.svg" title="Prometheus" alt="Prometheus" width="40" height="40"/>&nbsp;
+<img src="https://github.com/devicons/devicon/blob/master/icons/prometheus/prometheus-original-wordmark.svg" title="Prometheus" alt="Prometheus" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/materialui/materialui-original.svg" title="Material UI" alt="Material UI" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-plain-wordmark.svg"  title="CSS3" alt="CSS" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="JavaScript" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="Typescript" **alt="Typescript" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/webpack/webpack-original-wordmark.svg" title="Webpack"  alt="Webpack" width="40" height="40"/>&nbsp;
-<img src="https://github.com/devicons/devicon/blob/master/icons/mysql/mysql-original-wordmark.svg" title="MySQL"  alt="MySQL" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" title="NodeJS" alt="NodeJS" width="40" height="40"/>&nbsp;
 <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" title="Postman"  alt="Postman" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original-wordmark.svg" title="Git" **alt="Git" width="40" height="40"/>&nbsp;
@@ -84,16 +83,8 @@ kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 --namesp
 
 
 
+
 ## The Core Team
-
-Swan Htet | <a href="https://github.com/swanhtethtetswan">Github</a> | <a href="https://www.linkedin.com/in/swan-htet-htet-swan/">LinkedIn</a> </br>
-Miranda Jaramillo | <a href="https://github.com/mirandajaramillo">Github</a> | <a href="https://www.linkedin.com/in/miranda-jaramillo/">LinkedIn</a> </br>
-Lawrence Yeh | <a href="https://github.com/lawyeh">Github</a> | <a href="https://www.linkedin.com/in/lawyeh/">LinkedIn</a> </br>
-Jin Yoo | <a href="https://github.com/iyoojin">Github</a> | <a href="https://www.linkedin.com/in/iyoojin/">LinkedIn</a> </br>
-
-
-
-## Our Team
 <table align="center"><tbody><tr>
   <td align="center" width="150">
     <img src="https://github.com/MirandaJaramillo/githubImages/blob/main/images/SwanHtet.png" style="height: 5rem; width: 5rem;" />
