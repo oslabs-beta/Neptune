@@ -87,3 +87,45 @@ Swan Htet | <a href="https://github.com/swanhtethtetswan">Github</a> | <a href="
 Miranda Jaramillo | <a href="https://github.com/mirandajaramillo">Github</a> | <a href="https://www.linkedin.com/in/miranda-jaramillo/">LinkedIn</a> </br>
 Lawrence Yeh | <a href="https://github.com/lawyeh">Github</a> | <a href="https://www.linkedin.com/in/lawyeh/">LinkedIn</a> </br>
 Jin Yoo | <a href="https://github.com/iyoojin">Github</a> | <a href="https://www.linkedin.com/in/iyoojin/">LinkedIn</a> </br>
+
+
+
+## Our Team
+<table align="center"><tbody><tr>
+  <td align="center" width="150">
+    <img src="https://github.com/MirandaJaramillo/githubImages/blob/main/images/SwanHtet.png" style="height: 5rem; width: 5rem;" />
+    <br/>
+    <strong>Swan Htet</strong>
+    <br/>
+    <a href="https://github.com/swanhtethtetswan">GitHub</a>
+    <br/>
+    <a href="https://www.linkedin.com/in/swan-htet-htet-swan/">LinkedIn</a>
+  </td>
+  <td align="center" width="150">
+    <img src="https://github.com/MirandaJaramillo/githubImages/blob/main/images/Miranda-Headshot2022%20circle.png" style="height: 5rem; width: 5rem;" />
+    <br/>
+    <strong>Miranda Jaramillo</strong>
+    <br/>
+    <a href="https://github.com/mirandajaramillo">GitHub</a>
+    <br/>
+    <a href="https://www.linkedin.com/in/miranda-jaramillo/">LinkedIn</a>
+  </td>
+  <td align="center" width="150">
+    <img src="https://github.com/MirandaJaramillo/githubImages/blob/main/images/LawrenceYeh.png" style="height: 5rem; width: 5rem;" />
+    <br/>
+    <strong>Lawrence Yeh</strong>
+    <br/>
+    <a href="https://github.com/lawyeh">GitHub</a>
+    <br/>
+    <a href="https://www.linkedin.com/in/lawyeh/">LinkedIn</a>
+  </td>
+  <td align="center" width="150">
+    <img src="https://github.com/MirandaJaramillo/githubImages/blob/main/images/JinYoo.png" style="height: 5rem; width: 5rem;" />
+    <br/>
+    <strong>Jin Yoo</strong>
+    <br/>
+    <a href="https://github.com/iyoojin">GitHub</a>
+    <br/>
+    <a href="https://www.linkedin.com/in/iyoojin/">LinkedIn</a>
+  </td>
+</tr></tbody></table>
