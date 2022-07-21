@@ -5,8 +5,8 @@
 <p align="center">
    <strong>Light-weight, simple, and straightforward learning tool for your Kubernetes cluster</strong>
 
-Neptune is an approachable learning tool, light-weight in nature with a few monitoring features. PromQL has a steep learning curve and not everyone needs to learn how to use these queries. We have pre-selected a few relevant queries that display basic data about a simple Kubernetes cluster. This is to reduce the amount of noise when engaging with Prometheus. Neptune is meant to be an easy, visual way to understand a K8s cluster.
-<a href="https://exploreneptune.io">Learn more about Neptune here</a>
+   Neptune is an approachable learning tool, light-weight in nature with a few monitoring features. PromQL has a steep learning curve and not everyone needs to learn how to use these queries. We have pre-selected a few relevant queries that display basic data about a simple Kubernetes cluster. This is to reduce the amount of noise when engaging with Prometheus. Neptune is meant to be an easy, visual way to understand a K8s cluster.
+<a href="https://exploreneptune.io">Learn more about Neptune here.</a>
 
 ## Focus on what matters, with built in alerts and health monitoring.
 
