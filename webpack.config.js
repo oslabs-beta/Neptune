@@ -2,8 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WebpackDevServer = require('webpack-dev-server');
-
+// const WebpackDevServer = require('webpack-dev-server');
 
 const config = {
   mode: process.env.NODE_ENV,
@@ -40,19 +39,16 @@ const config = {
       //   },
       //   exclude: /node_modules/,
       // },
+      // {
+      //   test: /\.css$/,
+      //   use: [MiniCssExtractPlugin.loader, "css-loader"],
+      // },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
-      {
-        test: /\.s[ac]ss$/i,
+        test: /\.css$/i,
         exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        // check the webpack 
+        // Dockerize diff container 
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -69,21 +65,22 @@ const config = {
     compress: true,
     historyApiFallback: true,
 
-   static: {
+    static: {
       directory: path.join(__dirname, 'build'),
       publicPath: '/',
-  },
-
-  headers: { 'Access-Control-Allow-Origin': '*' },
-
-  proxy: {
-    '/api/**': {
-      target: 'http://localhost:3000',
-      secure: false,
     },
+
+    headers: { 'Access-Control-Allow-Origin': '*' },
+
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:3000',
+        secure: false,
+      },
+    },
+    watchFiles: ['client'],
   },
-  watchFiles: ['client'],
-},
+  resolve: { extensions: ['.js', '.jsx'] },
 };
 
 module.exports = config;

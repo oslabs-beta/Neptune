@@ -1,30 +1,49 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import DetailsContainer from './containers/DetailsContainer';
+import MiniDrawer from './containers/MiniDrawer';
+import { Container, Grid } from '@mui/material';
+import NotisContainer from './containers/NotisContainer';
+import QueryContainer from './containers/QueryContainer';
+import HomeContainer from './containers/HomeContainer';
+import '../client/styles/style.css';
 
 
-function App(){
 
-  const [data, setData] = React.useState('');
 
-  function handleClick() {
-    fetch('http://localhost:8080/api/')
-      .then(response => response.json())
-      .then(data =>  {
-        setData(data)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-  return(
+function App() {
+  return (
     <>
-    <div>
-      <h1>Front End Neptune World</h1>
-      <button onClick={handleClick}>SEND</button>
-      {data && <h1>{data}</h1>}
+  <div className='App'>
+  {/* 
+      <div className='AppGlass'>
+
+    
+
+   
+     <Container maxWidth="sm" id="mainContainer" sx= {{
+        background:"whitesmoke",
+        borderRadius: "16px",
+        display: "flex",
+        flexDirection: "column",
+    }}>*/}
+       
+      <BrowserRouter >
+          <MiniDrawer id = "logoBar">
+              <Routes>
+                <Route path='/' element={<HomeContainer />} />
+                <Route path='/details' element={<DetailsContainer />} />
+                <Route path='/alerts' element={<NotisContainer />} />
+              </Routes>
+          </MiniDrawer>
+      </BrowserRouter>
+      {/*
+    </Container>
     </div>
+     */} 
+  </div>
     </>
-  )
+  );
 }
 
 export default App;
