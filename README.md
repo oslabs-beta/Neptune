@@ -1,9 +1,10 @@
 # Introducing Neptune
 <p>
 <img src="https://github.com/MirandaJaramillo/githubImages/blob/main/images/centered_neptune.png" title="neptune" alt="neptune" />&nbsp;
-<p>
+<p> 
+<p align="center">
+   <strong>Lightweight, simple, and powerful visualization dashboard for your Kubernetes cluster</strong>
 
-Lightweight, simple, and powerful visualization dashboard for your Kubernetes cluster
 
 Kubernetes is on an upward trajectory with developers because of its many benefits that it offers to the software development lifecycle.
 Kubernetes has been on an upward trajectory with developers and for good reason.
@@ -64,7 +65,7 @@ kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 --namesp
 
 ## 🛠 &nbsp; Built With :
 
-<p>
+<p align="center">
 <img src="https://github.com/devicons/devicon/blob/master/icons/kubernetes/kubernetes-plain-wordmark.svg" title="Kubernetes" alt="Kubernetes" width="50" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" title="React" alt="React" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/prometheus/prometheus-original-wordmark.svg" title="Prometheus" alt="Prometheus" width="40" height="40"/>&nbsp;
