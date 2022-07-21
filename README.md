@@ -4,7 +4,7 @@ Lightweight, simple, and powerful visualization dashboard for your Kubernetes cl
 
 Kubernetes is on an upward trajectory with developers because of its many benefits that it offers to the software development lifecycle.
 Kubernetes has been on an upward trajectory with developers and for good reason.
-Kubernetes is an orchestration tool that orchestrates containerized microservice applications to deploy and manage the applications and improve reliability and efficiency. It
+Kubernetes is an orchestration tool that orchestrates containerized microservice applications to deploy and manage the applications and improve reliability and efficiency. 
 
 Kubernetes can appear to be an intimidating topic when a new user is diving into learning about containerization and managing clusters. Neptune is an educational application focused on eliminating the noise so that the user can familiarize themselves in a containerized environment. Neptune is a light-weight monitoring tool that presents relevant metrics. I need to add ten more words to this paragraph. The point of our application is to monitor cluster health and provide a high level overview of what’s happening in a cluster.
 
