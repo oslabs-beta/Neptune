@@ -10,7 +10,7 @@ Kubernetes is on an upward trajectory with developers because of its many benefi
 Kubernetes has been on an upward trajectory with developers and for good reason.
 Kubernetes is an orchestration tool that orchestrates containerized microservice applications to deploy and manage the applications and improve reliability and efficiency. 
 
-Kubernetes can appear to be an intimidating topic when a new user is diving into learning about containerization and managing clusters. Neptune is an educational application focused on eliminating the noise so that the user can familiarize themselves in a containerized environment. Neptune is a light-weight monitoring tool that presents relevant metrics. I need to add ten more words to this paragraph. The point of our application is to monitor cluster health and provide a high level overview of what’s happening in a cluster.
+Kubernetes can appear to be an intimidating topic when a new user is diving into learning about containerization and managing clusters. Neptune is an educational application focused on eliminating the noise so that the user can familiarize themselves in a containerized environment. Neptune is a light-weight monitoring tool that presents relevant metrics. The point of our application is to monitor cluster health and provide a high level overview of what’s happening in a cluster.
 
 ## Focus on what matters, with built in alerts and health monitoring.
 
@@ -73,7 +73,6 @@ kubectl port-forward prometheus-prometheus-kube-prometheus-prometheus-0 --namesp
 <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-plain-wordmark.svg"  title="CSS3" alt="CSS" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" title="JavaScript" alt="JavaScript" width="40" height="40"/>&nbsp;
-<img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="Typescript" **alt="Typescript" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/webpack/webpack-original-wordmark.svg" title="Webpack"  alt="Webpack" width="40" height="40"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" title="NodeJS" alt="NodeJS" width="40" height="40"/>&nbsp;
 <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" title="Postman"  alt="Postman" width="40" height="40"/>&nbsp;
