@@ -3,14 +3,10 @@
 <img src="https://github.com/MirandaJaramillo/githubImages/blob/main/images/centered_neptune.png" title="neptune" alt="neptune" />&nbsp;
 <p> 
 <p align="center">
-   <strong>Lightweight, simple, and powerful visualization dashboard for your Kubernetes cluster</strong>
+   <strong>Light-weight, simple, and straightforward learning tool for your Kubernetes cluster</strong>
 
-
-Kubernetes is on an upward trajectory with developers because of its many benefits that it offers to the software development lifecycle.
-Kubernetes has been on an upward trajectory with developers and for good reason.
-Kubernetes is an orchestration tool that orchestrates containerized microservice applications to deploy and manage the applications and improve reliability and efficiency. 
-
-Kubernetes can appear to be an intimidating topic when a new user is diving into learning about containerization and managing clusters. Neptune is an educational application focused on eliminating the noise so that the user can familiarize themselves in a containerized environment. Neptune is a light-weight monitoring tool that presents relevant metrics. The point of our application is to monitor cluster health and provide a high level overview of what’s happening in a cluster.
+Neptune is an approachable learning tool, light-weight in nature with a few monitoring features. PromQL has a steep learning curve and not everyone needs to learn how to use these queries. We have pre-selected a few relevant queries that display basic data about a simple Kubernetes cluster. This is to reduce the amount of noise when engaging with Prometheus. Neptune is meant to be an easy, visual way to understand a K8s cluster.
+<a href="https://exploreneptune.io">Learn more about Neptune here</a>
 
 ## Focus on what matters, with built in alerts and health monitoring.
 
