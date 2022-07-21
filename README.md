@@ -1,4 +1,7 @@
 # Introducing Neptune
+<p>
+<img src="https://github.com/MirandaJaramillo/githubImages/blob/main/images/centered_neptune.png" title="neptune" alt="neptune" />&nbsp;
+<p>
 
 Lightweight, simple, and powerful visualization dashboard for your Kubernetes cluster
 
