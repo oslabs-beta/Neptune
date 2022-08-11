@@ -1,5 +1,5 @@
 import React from 'react';
-import Searcher from '../components/Searcher';
+import SearchBar from '../components/SearchBar';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -10,7 +10,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
-import CardForNoti from '../components/CardForNoti';
+import NotificationCard from '../components/NotificationCard';
 
 
 
@@ -40,7 +40,7 @@ export default function NotisContainer (){
   <>
    <Grid container spacing={2}>
       <Grid item xs={10}>
-        <Searcher/>
+        <SearchBar/>
       </Grid>
       <Grid item xs={2}>
         <Box sx={{ minWidth: 120 }}>
@@ -68,7 +68,7 @@ export default function NotisContainer (){
         {notis.map((noti) => (
 
             <Grid item direction= 'row' xs={12}>
-              <CardForNoti
+              <NotificationCard
                 alertname={noti.labels.alertname}
                 description={noti.annotations.description}
                 namespace={noti.labels.namespace}

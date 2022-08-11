@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DetailsContainer from './containers/DetailsContainer';
 import MiniDrawer from './containers/MiniDrawer';
 import { Container, Grid } from '@mui/material';
-import NotisContainer from './containers/NotisContainer';
+import NotificationContainer from './containers/NotificationContainer';
 import QueryContainer from './containers/QueryContainer';
 import HomeContainer from './containers/HomeContainer';
 import '../client/styles/style.css';
@@ -33,7 +33,7 @@ function App() {
               <Routes>
                 <Route path='/' element={<HomeContainer />} />
                 <Route path='/details' element={<DetailsContainer />} />
-                <Route path='/alerts' element={<NotisContainer />} />
+                <Route path='/alerts' element={<NotificationContainer />} />
               </Routes>
           </MiniDrawer>
       </BrowserRouter>
