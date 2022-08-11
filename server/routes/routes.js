@@ -1,6 +1,6 @@
 const express = require('express');
 const k8sRouter = express.Router();
-const k8sController = require('../controllers/k8sClient');
+const k8sController = require('../controllers/k8sClientController');
 const promController = require('../controllers/promController');
 const queryController = require('../controllers/queryController');
 
