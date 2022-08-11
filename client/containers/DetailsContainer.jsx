@@ -64,9 +64,9 @@ export default function DetailsContainer() {
         pod.ip = element.status.podIP;
         pod.os = 'Linux';
         //assign random color
-        const r = Math.floor(Math.random() * 255);
-        const g = Math.floor(Math.random() * 255);
-        const b = Math.floor(Math.random() * 255);
+        const r = 0;
+        const g = 138;
+        const b = 216;
         pod.color = `rgba(${r},${g},${b},1)`;
         pod.key = {i};
 
